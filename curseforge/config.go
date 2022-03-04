@@ -14,7 +14,16 @@ type Config struct {
 	debug   bool
 }
 
-func NewConfig(apiKey string, baseUrl string, timeout time.Duration, debug bool) *Config {
+func NewConfig(apiKey string, timeout time.Duration, debug bool) *Config {
+	return &Config{
+		apiKey:  apiKey,
+		baseUrl: baseUrl,
+		timeout: timeout,
+		debug:   debug,
+	}
+}
+
+func NewConfigWithBaseURL(apiKey string, baseUrl string, timeout time.Duration, debug bool) *Config {
 	return &Config{
 		apiKey:  apiKey,
 		baseUrl: baseUrl,
