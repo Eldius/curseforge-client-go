@@ -1,0 +1,471 @@
+{
+    "data": [
+        {
+            "id": 398973,
+            "gameId": 432,
+            "name": "Biomes & Dimensions",
+            "slug": "minecraft",
+            "links": {
+                "websiteUrl": "https://www.curseforge.com/minecraft/mc-mods/minecraft",
+                "wikiUrl": "",
+                "issuesUrl": null,
+                "sourceUrl": null
+            },
+            "summary": "Mods",
+            "status": 4,
+            "downloadCount": 592.0,
+            "isFeatured": false,
+            "primaryCategoryId": 410,
+            "categories": [
+                {
+                    "id": 408,
+                    "gameId": 432,
+                    "name": "Ores and Resources",
+                    "slug": "world-ores-resources",
+                    "url": "https://www.curseforge.com/minecraft/mc-mods/world-gen/world-ores-resources",
+                    "iconUrl": "https://media.forgecdn.net/avatars/6/23/635351494012336510.png",
+                    "dateModified": "2014-05-08T17:36:41.233Z",
+                    "isClass": false,
+                    "classId": 6,
+                    "parentCategoryId": 406
+                },
+                {
+                    "id": 410,
+                    "gameId": 432,
+                    "name": "Dimensions",
+                    "slug": "world-dimensions",
+                    "url": "https://www.curseforge.com/minecraft/mc-mods/world-gen/world-dimensions",
+                    "iconUrl": "https://media.forgecdn.net/avatars/6/25/635351494468414756.png",
+                    "dateModified": "2014-05-08T17:37:26.84Z",
+                    "isClass": false,
+                    "classId": 6,
+                    "parentCategoryId": 406
+                },
+                {
+                    "id": 422,
+                    "gameId": 432,
+                    "name": "Adventure and RPG",
+                    "slug": "adventure-rpg",
+                    "url": "https://www.curseforge.com/minecraft/mc-mods/adventure-rpg",
+                    "iconUrl": "https://media.forgecdn.net/avatars/6/37/635351497295252123.png",
+                    "dateModified": "2014-05-08T17:42:09.54Z",
+                    "isClass": false,
+                    "classId": 6,
+                    "parentCategoryId": 6
+                },
+                {
+                    "id": 407,
+                    "gameId": 432,
+                    "name": "Biomes",
+                    "slug": "world-biomes",
+                    "url": "https://www.curseforge.com/minecraft/mc-mods/world-gen/world-biomes",
+                    "iconUrl": "https://media.forgecdn.net/avatars/6/22/635351492995856506.png",
+                    "dateModified": "2014-05-08T17:34:59.587Z",
+                    "isClass": false,
+                    "classId": 6,
+                    "parentCategoryId": 406
+                }
+            ],
+            "classId": 6,
+            "authors": [
+                {
+                    "id": 307512,
+                    "name": "Metro7777YT",
+                    "url": "https://www.curseforge.com/members/101293071-metro7777yt?username=metro7777yt"
+                }
+            ],
+            "logo": {
+                "id": 311644,
+                "modId": 398973,
+                "title": "637403397409840425.png",
+                "description": "",
+                "thumbnailUrl": "https://media.forgecdn.net/avatars/thumbnails/311/644/256/256/637403397409840425.png",
+                "url": "https://media.forgecdn.net/avatars/311/644/637403397409840425.png"
+            },
+            "screenshots": [
+                {
+                    "id": 294242,
+                    "modId": 398973,
+                    "title": "637332462166215160.gif",
+                    "description": "",
+                    "thumbnailUrl": "https://media.forgecdn.net/avatars/thumbnails/294/242/256/256/637332462166215160_animated.gif",
+                    "url": "https://media.forgecdn.net/avatars/294/242/637332462166215160.gif"
+                },
+                {
+                    "id": 289924,
+                    "modId": 398973,
+                    "title": "637317077696530863.png",
+                    "description": "",
+                    "thumbnailUrl": "https://media.forgecdn.net/avatars/thumbnails/289/924/256/256/637317077696530863.png",
+                    "url": "https://media.forgecdn.net/avatars/289/924/637317077696530863.png"
+                },
+                {
+                    "id": 294244,
+                    "modId": 398973,
+                    "title": "637332464902620652.png",
+                    "description": "",
+                    "thumbnailUrl": "https://media.forgecdn.net/avatars/thumbnails/294/244/256/256/637332464902620652.png",
+                    "url": "https://media.forgecdn.net/avatars/294/244/637332464902620652.png"
+                },
+                {
+                    "id": 308955,
+                    "modId": 398973,
+                    "title": "All the Portals before 1.2.0",
+                    "description": "",
+                    "thumbnailUrl": "https://media.forgecdn.net/attachments/thumbnails/308/955/310/172/bildschirmfoto-2020-08-19-um-08.png",
+                    "url": "https://media.forgecdn.net/attachments/308/955/bildschirmfoto-2020-08-19-um-08.png"
+                },
+                {
+                    "id": 310500,
+                    "modId": 398973,
+                    "title": "0.6.1 Ruby Update: Moon!",
+                    "description": "",
+                    "thumbnailUrl": "https://media.forgecdn.net/attachments/thumbnails/310/500/310/172/bildschirmfoto-2020-08-29-um-19.png",
+                    "url": "https://media.forgecdn.net/attachments/310/500/bildschirmfoto-2020-08-29-um-19.png"
+                },
+                {
+                    "id": 305619,
+                    "modId": 398973,
+                    "title": "0.0.11 Mauros Lands!",
+                    "description": "",
+                    "thumbnailUrl": "https://media.forgecdn.net/attachments/thumbnails/305/619/310/172/bildschirmfoto-2020-07-31-um-08.png",
+                    "url": "https://media.forgecdn.net/attachments/305/619/bildschirmfoto-2020-07-31-um-08.png"
+                },
+                {
+                    "id": 305467,
+                    "modId": 398973,
+                    "title": "0.0.9 Ore Update!",
+                    "description": "",
+                    "thumbnailUrl": "https://media.forgecdn.net/attachments/thumbnails/305/467/310/172/bildschirmfoto-2020-07-30-um-14.png",
+                    "url": "https://media.forgecdn.net/attachments/305/467/bildschirmfoto-2020-07-30-um-14.png"
+                },
+                {
+                    "id": 310502,
+                    "modId": 398973,
+                    "title": "The Moon Tower",
+                    "description": "",
+                    "thumbnailUrl": "https://media.forgecdn.net/attachments/thumbnails/310/502/310/172/bildschirmfoto-2020-08-29-um-19.png",
+                    "url": "https://media.forgecdn.net/attachments/310/502/bildschirmfoto-2020-08-29-um-19.png"
+                },
+                {
+                    "id": 309115,
+                    "modId": 398973,
+                    "title": "0.3.4 The Reverse World!",
+                    "description": "",
+                    "thumbnailUrl": "https://media.forgecdn.net/attachments/thumbnails/309/115/310/172/bildschirmfoto-2020-08-20-um-07.png",
+                    "url": "https://media.forgecdn.net/attachments/309/115/bildschirmfoto-2020-08-20-um-07.png"
+                },
+                {
+                    "id": 324918,
+                    "modId": 398973,
+                    "title": "Making Meteorites",
+                    "description": "They crash my game!",
+                    "thumbnailUrl": "https://media.forgecdn.net/attachments/thumbnails/324/918/310/172/bildschirmfoto-2020-11-27-um-18.png",
+                    "url": "https://media.forgecdn.net/attachments/324/918/bildschirmfoto-2020-11-27-um-18.png"
+                },
+                {
+                    "id": 324917,
+                    "modId": 398973,
+                    "title": "New Titlescreen!",
+                    "description": "By Anonymitron",
+                    "thumbnailUrl": "https://media.forgecdn.net/attachments/thumbnails/324/917/310/172/bildschirmfoto-2020-11-27-um-17.png",
+                    "url": "https://media.forgecdn.net/attachments/324/917/bildschirmfoto-2020-11-27-um-17.png"
+                }
+            ],
+            "mainFileId": 3126207,
+            "latestFiles": [
+                {
+                    "id": 3030088,
+                    "gameId": 432,
+                    "modId": 398973,
+                    "isAvailable": true,
+                    "displayName": "0.1.PRE The Moon-crater test! ^^(not very successfully",
+                    "fileName": "Pre-release-beta_0.1.PRE_Mc-1.15.2.jar",
+                    "releaseType": 3,
+                    "fileStatus": 4,
+                    "hashes": [
+                        {
+                            "value": "7fc71c6f68b5e877a51079d12e9ef981183b8fe2",
+                            "algo": 1
+                        },
+                        {
+                            "value": "d4b20fb05299bdfa1ba6fe5fe3ce46bd",
+                            "algo": 2
+                        }
+                    ],
+                    "fileDate": "2020-08-12T07:29:27.277Z",
+                    "fileLength": 2366748,
+                    "downloadCount": 10,
+                    "downloadUrl": "https://edge.forgecdn.net/files/3030/88/Pre-release-beta_0.1.PRE_Mc-1.15.2.jar",
+                    "gameVersions": [
+                        "Forge",
+                        "1.15.2"
+                    ],
+                    "sortableGameVersions": [
+                        {
+                            "gameVersionName": "Forge",
+                            "gameVersionPadded": "0",
+                            "gameVersion": "",
+                            "gameVersionReleaseDate": "2019-08-01T00:00:00Z",
+                            "gameVersionTypeId": 68441
+                        },
+                        {
+                            "gameVersionName": "1.15.2",
+                            "gameVersionPadded": "0000000001.0000000015.0000000002",
+                            "gameVersion": "1.15.2",
+                            "gameVersionReleaseDate": "2020-01-22T00:00:00Z",
+                            "gameVersionTypeId": 68722
+                        }
+                    ],
+                    "dependencies": [],
+                    "alternateFileId": 0,
+                    "isServerPack": false,
+                    "fileFingerprint": 3937611576,
+                    "modules": [
+                        {
+                            "name": "META-INF",
+                            "fingerprint": 4127544001
+                        },
+                        {
+                            "name": "net",
+                            "fingerprint": 3526832114
+                        },
+                        {
+                            "name": "data",
+                            "fingerprint": 3154292839
+                        },
+                        {
+                            "name": "assets",
+                            "fingerprint": 2475524688
+                        },
+                        {
+                            "name": "pack.mcmeta",
+                            "fingerprint": 1884945439
+                        }
+                    ]
+                },
+                {
+                    "id": 3045131,
+                    "gameId": 432,
+                    "modId": 398973,
+                    "isAvailable": true,
+                    "displayName": "[1.15.2] Ruby Update: Moon! 0.6.1",
+                    "fileName": "MaurosDimensions_1.0.0-MC1.15.2_FORGE.jar",
+                    "releaseType": 2,
+                    "fileStatus": 4,
+                    "hashes": [
+                        {
+                            "value": "4b069f63e2de6d8335c47573e6fdc7c6b0a8e488",
+                            "algo": 1
+                        },
+                        {
+                            "value": "facee1f14cf9b85c0db50b7bafd5d8cd",
+                            "algo": 2
+                        }
+                    ],
+                    "fileDate": "2020-08-29T17:30:56.3Z",
+                    "fileLength": 8719378,
+                    "downloadCount": 21,
+                    "downloadUrl": "https://edge.forgecdn.net/files/3045/131/MaurosDimensions_1.0.0-MC1.15.2_FORGE.jar",
+                    "gameVersions": [
+                        "Forge",
+                        "1.15.2"
+                    ],
+                    "sortableGameVersions": [
+                        {
+                            "gameVersionName": "Forge",
+                            "gameVersionPadded": "0",
+                            "gameVersion": "",
+                            "gameVersionReleaseDate": "2019-08-01T00:00:00Z",
+                            "gameVersionTypeId": 68441
+                        },
+                        {
+                            "gameVersionName": "1.15.2",
+                            "gameVersionPadded": "0000000001.0000000015.0000000002",
+                            "gameVersion": "1.15.2",
+                            "gameVersionReleaseDate": "2020-01-22T00:00:00Z",
+                            "gameVersionTypeId": 68722
+                        }
+                    ],
+                    "dependencies": [],
+                    "alternateFileId": 0,
+                    "isServerPack": false,
+                    "fileFingerprint": 4099623949,
+                    "modules": [
+                        {
+                            "name": "META-INF",
+                            "fingerprint": 4127544001
+                        },
+                        {
+                            "name": "net",
+                            "fingerprint": 1713870704
+                        },
+                        {
+                            "name": "data",
+                            "fingerprint": 3663573772
+                        },
+                        {
+                            "name": "assets",
+                            "fingerprint": 588789235
+                        },
+                        {
+                            "name": "pack.mcmeta",
+                            "fingerprint": 1884945439
+                        }
+                    ]
+                },
+                {
+                    "id": 3126207,
+                    "gameId": 432,
+                    "modId": 398973,
+                    "isAvailable": true,
+                    "displayName": "[1.15.x] Dimension Update 1.3.0a",
+                    "fileName": "BiomesDimensions_1.3.0a_MC1.15.x.jar",
+                    "releaseType": 1,
+                    "fileStatus": 4,
+                    "hashes": [
+                        {
+                            "value": "422bf908cc0d7568f6bb1fa1737dac552182f893",
+                            "algo": 1
+                        },
+                        {
+                            "value": "687c3fa84b1c6adfa3a320789d6b1ead",
+                            "algo": 2
+                        }
+                    ],
+                    "fileDate": "2020-11-29T11:07:11.073Z",
+                    "fileLength": 39606907,
+                    "downloadCount": 146,
+                    "downloadUrl": "https://edge.forgecdn.net/files/3126/207/BiomesDimensions_1.3.0a_MC1.15.x.jar",
+                    "gameVersions": [
+                        "1.15",
+                        "Forge",
+                        "1.15.2",
+                        "1.15.1"
+                    ],
+                    "sortableGameVersions": [
+                        {
+                            "gameVersionName": "1.15",
+                            "gameVersionPadded": "0000000001.0000000015",
+                            "gameVersion": "1.15",
+                            "gameVersionReleaseDate": "2019-12-10T15:26:51.027Z",
+                            "gameVersionTypeId": 68722
+                        },
+                        {
+                            "gameVersionName": "Forge",
+                            "gameVersionPadded": "0",
+                            "gameVersion": "",
+                            "gameVersionReleaseDate": "2019-08-01T00:00:00Z",
+                            "gameVersionTypeId": 68441
+                        },
+                        {
+                            "gameVersionName": "1.15.2",
+                            "gameVersionPadded": "0000000001.0000000015.0000000002",
+                            "gameVersion": "1.15.2",
+                            "gameVersionReleaseDate": "2020-01-22T00:00:00Z",
+                            "gameVersionTypeId": 68722
+                        },
+                        {
+                            "gameVersionName": "1.15.1",
+                            "gameVersionPadded": "0000000001.0000000015.0000000001",
+                            "gameVersion": "1.15.1",
+                            "gameVersionReleaseDate": "2019-12-17T00:00:00Z",
+                            "gameVersionTypeId": 68722
+                        }
+                    ],
+                    "dependencies": [],
+                    "alternateFileId": 0,
+                    "isServerPack": false,
+                    "fileFingerprint": 440621830,
+                    "modules": [
+                        {
+                            "name": "META-INF",
+                            "fingerprint": 1173424743
+                        },
+                        {
+                            "name": "net",
+                            "fingerprint": 742130925
+                        },
+                        {
+                            "name": "logo.png",
+                            "fingerprint": 2995729724
+                        },
+                        {
+                            "name": "data",
+                            "fingerprint": 3042820086
+                        },
+                        {
+                            "name": "assets",
+                            "fingerprint": 2236841011
+                        },
+                        {
+                            "name": "pack.mcmeta",
+                            "fingerprint": 1884945439
+                        }
+                    ]
+                }
+            ],
+            "latestFilesIndexes": [
+                {
+                    "gameVersion": "1.15",
+                    "fileId": 3126207,
+                    "filename": "BiomesDimensions_1.3.0a_MC1.15.x.jar",
+                    "releaseType": 1,
+                    "gameVersionTypeId": 68722,
+                    "modLoader": 1
+                },
+                {
+                    "gameVersion": "1.15.2",
+                    "fileId": 3126207,
+                    "filename": "BiomesDimensions_1.3.0a_MC1.15.x.jar",
+                    "releaseType": 1,
+                    "gameVersionTypeId": 68722,
+                    "modLoader": 1
+                },
+                {
+                    "gameVersion": "1.15.1",
+                    "fileId": 3126207,
+                    "filename": "BiomesDimensions_1.3.0a_MC1.15.x.jar",
+                    "releaseType": 1,
+                    "gameVersionTypeId": 68722,
+                    "modLoader": 1
+                },
+                {
+                    "gameVersion": "1.15.2",
+                    "fileId": 3045131,
+                    "filename": "MaurosDimensions_1.0.0-MC1.15.2_FORGE.jar",
+                    "releaseType": 2,
+                    "gameVersionTypeId": 68722,
+                    "modLoader": 1
+                },
+                {
+                    "gameVersion": "1.15.1",
+                    "fileId": 3030124,
+                    "filename": "Mauros_dimesions_0.1.1_Mc-1.15.2.jar",
+                    "releaseType": 2,
+                    "gameVersionTypeId": 68722,
+                    "modLoader": 1
+                },
+                {
+                    "gameVersion": "1.15.2",
+                    "fileId": 3030088,
+                    "filename": "Pre-release-beta_0.1.PRE_Mc-1.15.2.jar",
+                    "releaseType": 3,
+                    "gameVersionTypeId": 68722,
+                    "modLoader": 1
+                }
+            ],
+            "dateCreated": "2020-07-30T12:09:29.603Z",
+            "dateModified": "2021-05-25T01:52:59.85Z",
+            "dateReleased": "2020-11-29T11:07:11.073Z",
+            "allowModDistribution": null,
+            "gamePopularityRank": 31218
+        }
+    ],
+    "pagination": {
+        "index": 0,
+        "pageSize": 50,
+        "resultCount": 1,
+        "totalCount": 1
+    }
+}

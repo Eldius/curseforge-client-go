@@ -1,0 +1,62 @@
+{
+    "data": [
+        {
+            "id": 78135,
+            "name": "Demeo",
+            "slug": "demeo",
+            "dateModified": "2021-12-22T10:16:42.647Z",
+            "assets": {
+                "iconUrl": "https://media.forgecdn.net/avatars/468/250/637751406649699690.png",
+                "tileUrl": "https://cfcore-assets.forgecdn.net/game-tiles/eaf07d14-8695-4f69-bd0c-78af44f94b4c.png",
+                "coverUrl": "https://cfcore-assets.forgecdn.net/game-covers/71ad59c6-0dfa-46dd-9985-daa07d82b82b.png"
+            },
+            "status": 6,
+            "apiStatus": 2
+        },
+        {
+            "id": 70667,
+            "name": "Chronicles of Arcadia",
+            "slug": "chronicles-of-arcadia",
+            "dateModified": "2021-01-20T08:01:59.527Z",
+            "assets": {
+                "iconUrl": null,
+                "tileUrl": "https://media.forgecdn.net/game-tiles/arcadia.jpg",
+                "coverUrl": null
+            },
+            "status": 6,
+            "apiStatus": 2
+        },
+        {
+            "id": 454,
+            "name": "WildStar",
+            "slug": "wildstar",
+            "dateModified": "2021-10-07T13:14:10.363Z",
+            "assets": {
+                "iconUrl": "https://media.forgecdn.net/avatars/2/496/635301584801074213.png",
+                "tileUrl": "https://media.forgecdn.net/game-tiles/WildStar+Tile.jpg",
+                "coverUrl": ""
+            },
+            "status": 6,
+            "apiStatus": 2
+        },
+        {
+            "id": 432,
+            "name": "Minecraft",
+            "slug": "minecraft",
+            "dateModified": "2021-10-07T07:58:37.25Z",
+            "assets": {
+                "iconUrl": "https://media.forgecdn.net/avatars/2/494/635300874663985333.png",
+                "tileUrl": "https://static-cdn.jtvnw.net/ttv-boxart/Minecraft-285x380.jpg",
+                "coverUrl": "https://cfcore-assets.forgecdn.net/game-covers/457c8141-8d81-4d13-aaa9-b5655011fb69.png"
+            },
+            "status": 6,
+            "apiStatus": 2
+        }
+    ],
+    "pagination": {
+        "index": 0,
+        "pageSize": 50,
+        "resultCount": 4,
+        "totalCount": 4
+    }
+}

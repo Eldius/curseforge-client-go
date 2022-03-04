@@ -1,0 +1,568 @@
+{
+    "data": [
+        {
+            "id": 444506,
+            "gameId": 432,
+            "name": "ATM Tweaked",
+            "slug": "atm-tweaked",
+            "links": {
+                "websiteUrl": "https://www.curseforge.com/minecraft/modpacks/atm-tweaked",
+                "wikiUrl": null,
+                "issuesUrl": null,
+                "sourceUrl": null
+            },
+            "summary": "A smaller, more compact version of the popular ATM",
+            "status": 4,
+            "downloadCount": 2.0,
+            "isFeatured": false,
+            "primaryCategoryId": 4476,
+            "categories": [
+                {
+                    "id": 4476,
+                    "gameId": 432,
+                    "name": "Exploration",
+                    "slug": "exploration",
+                    "url": "https://www.curseforge.com/minecraft/modpacks/exploration",
+                    "iconUrl": "https://media.forgecdn.net/avatars/14/486/635596815896417213.png",
+                    "dateModified": "2015-02-16T17:06:29.69Z",
+                    "isClass": false,
+                    "classId": 4471,
+                    "parentCategoryId": 4471
+                },
+                {
+                    "id": 4472,
+                    "gameId": 432,
+                    "name": "Tech",
+                    "slug": "tech",
+                    "url": "https://www.curseforge.com/minecraft/modpacks/tech",
+                    "iconUrl": "https://media.forgecdn.net/avatars/14/479/635596761534662757.png",
+                    "dateModified": "2015-02-16T15:35:53.467Z",
+                    "isClass": false,
+                    "classId": 4471,
+                    "parentCategoryId": 4471
+                }
+            ],
+            "classId": 4471,
+            "authors": [
+                {
+                    "id": 356610,
+                    "name": "Pinossaur_",
+                    "url": "https://www.curseforge.com/members/101922148-pinossaur_?username=pinossaur_"
+                }
+            ],
+            "logo": {
+                "id": 341160,
+                "modId": 444506,
+                "title": "637483867791655854.png",
+                "description": "",
+                "thumbnailUrl": "https://media.forgecdn.net/avatars/thumbnails/341/160/256/256/637483867791655854.png",
+                "url": "https://media.forgecdn.net/avatars/341/160/637483867791655854.png"
+            },
+            "screenshots": [],
+            "mainFileId": 3196869,
+            "latestFiles": [
+                {
+                    "id": 3196869,
+                    "gameId": 432,
+                    "modId": 444506,
+                    "isAvailable": true,
+                    "displayName": "Atm Tweaked 1.0.1",
+                    "fileName": "ATM Simplified-1.0.1.zip",
+                    "releaseType": 1,
+                    "fileStatus": 4,
+                    "hashes": [],
+                    "fileDate": "2021-02-08T14:55:27.103Z",
+                    "fileLength": 3226566,
+                    "downloadCount": 0,
+                    "downloadUrl": "https://edge.forgecdn.net/files/3196/869/ATM Simplified-1.0.1.zip",
+                    "gameVersions": [
+                        "1.12.2"
+                    ],
+                    "sortableGameVersions": [
+                        {
+                            "gameVersionName": "1.12.2",
+                            "gameVersionPadded": "0000000001.0000000012.0000000002",
+                            "gameVersion": "1.12.2",
+                            "gameVersionReleaseDate": "2017-09-18T05:00:00Z",
+                            "gameVersionTypeId": null
+                        }
+                    ],
+                    "dependencies": [],
+                    "alternateFileId": 0,
+                    "isServerPack": false,
+                    "fileFingerprint": 1083179090,
+                    "modules": [
+                        {
+                            "name": "manifest.json",
+                            "fingerprint": 92593092
+                        }
+                    ]
+                }
+            ],
+            "latestFilesIndexes": [
+                {
+                    "gameVersion": "1.12.2",
+                    "fileId": 3196869,
+                    "filename": "ATM Simplified-1.0.1.zip",
+                    "releaseType": 1,
+                    "gameVersionTypeId": null,
+                    "modLoader": null
+                }
+            ],
+            "dateCreated": "2021-02-08T13:12:59.1Z",
+            "dateModified": "2021-02-09T11:47:37.15Z",
+            "dateReleased": "2021-02-08T14:55:27.103Z",
+            "allowModDistribution": null,
+            "gamePopularityRank": 999999
+        },
+        {
+            "id": 502449,
+            "gameId": 432,
+            "name": "Atmospheric",
+            "slug": "atmospheric",
+            "links": {
+                "websiteUrl": "https://www.curseforge.com/minecraft/modpacks/atmospheric",
+                "wikiUrl": null,
+                "issuesUrl": null,
+                "sourceUrl": null
+            },
+            "summary": "A small-ish modpack centered around creating a more atmospheric environment with some RPG elements and magic.",
+            "status": 4,
+            "downloadCount": 284.0,
+            "isFeatured": false,
+            "primaryCategoryId": 4475,
+            "categories": [
+                {
+                    "id": 4476,
+                    "gameId": 432,
+                    "name": "Exploration",
+                    "slug": "exploration",
+                    "url": "https://www.curseforge.com/minecraft/modpacks/exploration",
+                    "iconUrl": "https://media.forgecdn.net/avatars/14/486/635596815896417213.png",
+                    "dateModified": "2015-02-16T17:06:29.69Z",
+                    "isClass": false,
+                    "classId": 4471,
+                    "parentCategoryId": 4471
+                },
+                {
+                    "id": 4473,
+                    "gameId": 432,
+                    "name": "Magic",
+                    "slug": "magic",
+                    "url": "https://www.curseforge.com/minecraft/modpacks/magic",
+                    "iconUrl": "https://media.forgecdn.net/avatars/14/474/635596760578719019.png",
+                    "dateModified": "2015-02-16T15:34:17.873Z",
+                    "isClass": false,
+                    "classId": 4471,
+                    "parentCategoryId": 4471
+                },
+                {
+                    "id": 4484,
+                    "gameId": 432,
+                    "name": "Multiplayer",
+                    "slug": "multiplayer",
+                    "url": "https://www.curseforge.com/minecraft/modpacks/multiplayer",
+                    "iconUrl": "https://media.forgecdn.net/avatars/14/481/635596792838491141.png",
+                    "dateModified": "2015-02-16T16:28:03.85Z",
+                    "isClass": false,
+                    "classId": 4471,
+                    "parentCategoryId": 4471
+                },
+                {
+                    "id": 4475,
+                    "gameId": 432,
+                    "name": "Adventure and RPG",
+                    "slug": "adventure-and-rpg",
+                    "url": "https://www.curseforge.com/minecraft/modpacks/adventure-and-rpg",
+                    "iconUrl": "https://media.forgecdn.net/avatars/14/480/635596775049811800.png",
+                    "dateModified": "2015-02-16T15:58:24.98Z",
+                    "isClass": false,
+                    "classId": 4471,
+                    "parentCategoryId": 4471
+                }
+            ],
+            "classId": 4471,
+            "authors": [
+                {
+                    "id": 418954,
+                    "name": "seathing2201",
+                    "url": "https://www.curseforge.com/members/102481464-seathing2201?username=seathing2201"
+                }
+            ],
+            "logo": {
+                "id": 404518,
+                "modId": 502449,
+                "title": "637615309030111184.png",
+                "description": "",
+                "thumbnailUrl": "https://media.forgecdn.net/avatars/thumbnails/404/518/256/256/637615309030111184.png",
+                "url": "https://media.forgecdn.net/avatars/404/518/637615309030111184.png"
+            },
+            "screenshots": [],
+            "mainFileId": 3383768,
+            "latestFiles": [
+                {
+                    "id": 3383768,
+                    "gameId": 432,
+                    "modId": 502449,
+                    "isAvailable": true,
+                    "displayName": "Atmospheric",
+                    "fileName": "RPG stuff.zip",
+                    "releaseType": 1,
+                    "fileStatus": 4,
+                    "hashes": [],
+                    "fileDate": "2021-07-10T16:22:58.6Z",
+                    "fileLength": 197277,
+                    "downloadCount": 0,
+                    "downloadUrl": "https://edge.forgecdn.net/files/3383/768/RPG stuff.zip",
+                    "gameVersions": [
+                        "1.16.5",
+                        "Forge"
+                    ],
+                    "sortableGameVersions": [
+                        {
+                            "gameVersionName": "1.16.5",
+                            "gameVersionPadded": "0000000001.0000000016.0000000005",
+                            "gameVersion": "1.16.5",
+                            "gameVersionReleaseDate": "2021-01-15T14:14:48.91Z",
+                            "gameVersionTypeId": null
+                        },
+                        {
+                            "gameVersionName": "Forge",
+                            "gameVersionPadded": "0",
+                            "gameVersion": "",
+                            "gameVersionReleaseDate": "2019-08-01T00:00:00Z",
+                            "gameVersionTypeId": null
+                        }
+                    ],
+                    "dependencies": [],
+                    "alternateFileId": 0,
+                    "isServerPack": false,
+                    "fileFingerprint": 3450131180,
+                    "modules": [
+                        {
+                            "name": "manifest.json",
+                            "fingerprint": 718947387
+                        }
+                    ]
+                }
+            ],
+            "latestFilesIndexes": [
+                {
+                    "gameVersion": "1.16.5",
+                    "fileId": 3383768,
+                    "filename": "RPG stuff.zip",
+                    "releaseType": 1,
+                    "gameVersionTypeId": null,
+                    "modLoader": null
+                }
+            ],
+            "dateCreated": "2021-07-10T16:21:42.95Z",
+            "dateModified": "2021-07-13T10:20:38.217Z",
+            "dateReleased": "2021-07-10T16:22:58.6Z",
+            "allowModDistribution": null,
+            "gamePopularityRank": 134730
+        },
+        {
+            "id": 225096,
+            "gameId": 432,
+            "name": "atmosFear",
+            "slug": "atmosfear",
+            "links": {
+                "websiteUrl": "https://www.curseforge.com/minecraft/worlds/atmosfear",
+                "wikiUrl": "",
+                "issuesUrl": "",
+                "sourceUrl": null
+            },
+            "summary": "Something has gone terribly wrong... You are stranded inside a failing mining base on a strange moon, surrounded by evil...",
+            "status": 4,
+            "downloadCount": 583.0,
+            "isFeatured": false,
+            "primaryCategoryId": 248,
+            "categories": [
+                {
+                    "id": 253,
+                    "gameId": 432,
+                    "name": "Survival",
+                    "slug": "survival",
+                    "url": "https://www.curseforge.com/minecraft/worlds/survival",
+                    "iconUrl": "https://media.forgecdn.net/avatars/6/622/635363921878205350.png",
+                    "dateModified": "2014-05-23T02:49:47.82Z",
+                    "isClass": false,
+                    "classId": 17,
+                    "parentCategoryId": 17
+                },
+                {
+                    "id": 248,
+                    "gameId": 432,
+                    "name": "Adventure",
+                    "slug": "adventure",
+                    "url": "https://www.curseforge.com/minecraft/worlds/adventure",
+                    "iconUrl": "https://media.forgecdn.net/avatars/6/617/635363921236371861.png",
+                    "dateModified": "2014-05-23T02:48:43.637Z",
+                    "isClass": false,
+                    "classId": 17,
+                    "parentCategoryId": 17
+                },
+                {
+                    "id": 252,
+                    "gameId": 432,
+                    "name": "Puzzle",
+                    "slug": "puzzle",
+                    "url": "https://www.curseforge.com/minecraft/worlds/puzzle",
+                    "iconUrl": "https://media.forgecdn.net/avatars/6/621/635363921799872657.png",
+                    "dateModified": "2014-05-23T02:49:39.987Z",
+                    "isClass": false,
+                    "classId": 17,
+                    "parentCategoryId": 17
+                }
+            ],
+            "classId": 17,
+            "authors": [
+                {
+                    "id": 16976,
+                    "name": "_ForgeUser16966718",
+                    "url": "https://www.curseforge.com/members/16966718-_forgeuser16966718?username=_ForgeUser16966718"
+                }
+            ],
+            "logo": {
+                "id": 11613,
+                "modId": 225096,
+                "title": "635496836001880163.jpeg",
+                "description": "",
+                "thumbnailUrl": "https://media.forgecdn.net/avatars/thumbnails/11/613/256/256/635496836001880163.jpeg",
+                "url": "https://media.forgecdn.net/avatars/11/613/635496836001880163.jpeg"
+            },
+            "screenshots": [],
+            "mainFileId": 2217365,
+            "latestFiles": [
+                {
+                    "id": 2217365,
+                    "gameId": 432,
+                    "modId": 225096,
+                    "isAvailable": true,
+                    "displayName": "atmosFear-1.1.zip",
+                    "fileName": "atmosFear-1.1.zip",
+                    "releaseType": 1,
+                    "fileStatus": 4,
+                    "hashes": [
+                        {
+                            "value": "4146ecbf8f3afd4440f2e867e218c8bd2f7410bd",
+                            "algo": 1
+                        },
+                        {
+                            "value": "8548e0edb22d1c422eacd0e9fd3203b8",
+                            "algo": 2
+                        }
+                    ],
+                    "fileDate": "2014-10-23T22:53:20.203Z",
+                    "fileLength": 228067061,
+                    "downloadCount": 583,
+                    "downloadUrl": "https://edge.forgecdn.net/files/2217/365/atmosFear-1.1.zip",
+                    "gameVersions": [
+                        "1.8"
+                    ],
+                    "sortableGameVersions": [
+                        {
+                            "gameVersionName": "1.8",
+                            "gameVersionPadded": "0000000001.0000000008",
+                            "gameVersion": "1.8",
+                            "gameVersionReleaseDate": "2014-09-02T00:00:00Z",
+                            "gameVersionTypeId": 4
+                        }
+                    ],
+                    "dependencies": [],
+                    "alternateFileId": 0,
+                    "isServerPack": false,
+                    "fileFingerprint": 522320615,
+                    "modules": [
+                        {
+                            "name": "atmosfear-pack.zip",
+                            "fingerprint": 426268125
+                        },
+                        {
+                            "name": "atmosfear",
+                            "fingerprint": 2392633776
+                        }
+                    ]
+                }
+            ],
+            "latestFilesIndexes": [
+                {
+                    "gameVersion": "1.8",
+                    "fileId": 2217365,
+                    "filename": "atmosFear-1.1.zip",
+                    "releaseType": 1,
+                    "gameVersionTypeId": 4,
+                    "modLoader": null
+                }
+            ],
+            "dateCreated": "2014-10-23T22:53:20.173Z",
+            "dateModified": "2014-10-23T22:57:43.867Z",
+            "dateReleased": "2014-10-23T22:53:20.203Z",
+            "allowModDistribution": null,
+            "gamePopularityRank": 83314
+        },
+        {
+            "id": 453546,
+            "gameId": 432,
+            "name": "Atmospheric Workshop",
+            "slug": "atmospheric-workshop",
+            "links": {
+                "websiteUrl": "https://www.curseforge.com/minecraft/modpacks/atmospheric-workshop",
+                "wikiUrl": null,
+                "issuesUrl": null,
+                "sourceUrl": null
+            },
+            "summary": "A pack of tech and magic, but watch the skies!",
+            "status": 4,
+            "downloadCount": 10.0,
+            "isFeatured": false,
+            "primaryCategoryId": 4476,
+            "categories": [
+                {
+                    "id": 4473,
+                    "gameId": 432,
+                    "name": "Magic",
+                    "slug": "magic",
+                    "url": "https://www.curseforge.com/minecraft/modpacks/magic",
+                    "iconUrl": "https://media.forgecdn.net/avatars/14/474/635596760578719019.png",
+                    "dateModified": "2015-02-16T15:34:17.873Z",
+                    "isClass": false,
+                    "classId": 4471,
+                    "parentCategoryId": 4471
+                },
+                {
+                    "id": 4476,
+                    "gameId": 432,
+                    "name": "Exploration",
+                    "slug": "exploration",
+                    "url": "https://www.curseforge.com/minecraft/modpacks/exploration",
+                    "iconUrl": "https://media.forgecdn.net/avatars/14/486/635596815896417213.png",
+                    "dateModified": "2015-02-16T17:06:29.69Z",
+                    "isClass": false,
+                    "classId": 4471,
+                    "parentCategoryId": 4471
+                },
+                {
+                    "id": 4472,
+                    "gameId": 432,
+                    "name": "Tech",
+                    "slug": "tech",
+                    "url": "https://www.curseforge.com/minecraft/modpacks/tech",
+                    "iconUrl": "https://media.forgecdn.net/avatars/14/479/635596761534662757.png",
+                    "dateModified": "2015-02-16T15:35:53.467Z",
+                    "isClass": false,
+                    "classId": 4471,
+                    "parentCategoryId": 4471
+                },
+                {
+                    "id": 4481,
+                    "gameId": 432,
+                    "name": "Small / Light",
+                    "slug": "small-light",
+                    "url": "https://www.curseforge.com/minecraft/modpacks/small-light",
+                    "iconUrl": "https://media.forgecdn.net/avatars/14/478/635596761449660932.png",
+                    "dateModified": "2015-02-16T15:35:44.967Z",
+                    "isClass": false,
+                    "classId": 4471,
+                    "parentCategoryId": 4471
+                }
+            ],
+            "classId": 4471,
+            "authors": [
+                {
+                    "id": 366218,
+                    "name": "funnelboy5",
+                    "url": "https://www.curseforge.com/members/101709988-funnelboy5?username=funnelboy5"
+                }
+            ],
+            "logo": {
+                "id": 351280,
+                "modId": 453546,
+                "title": "637505506581470691.png",
+                "description": "",
+                "thumbnailUrl": "https://media.forgecdn.net/avatars/thumbnails/351/280/256/256/637505506581470691.png",
+                "url": "https://media.forgecdn.net/avatars/351/280/637505506581470691.png"
+            },
+            "screenshots": [
+                {
+                    "id": 346940,
+                    "modId": 453546,
+                    "title": "Raining on the roof",
+                    "description": "",
+                    "thumbnailUrl": "https://media.forgecdn.net/attachments/thumbnails/346/940/310/172/2021-03-10_16.png",
+                    "url": "https://media.forgecdn.net/attachments/346/940/2021-03-10_16.png"
+                },
+                {
+                    "id": 346941,
+                    "modId": 453546,
+                    "title": "Leaves in front of the moon",
+                    "description": "",
+                    "thumbnailUrl": "https://media.forgecdn.net/attachments/thumbnails/346/941/310/172/2021-03-10_18.png",
+                    "url": "https://media.forgecdn.net/attachments/346/941/2021-03-10_18.png"
+                }
+            ],
+            "mainFileId": 3227296,
+            "latestFiles": [
+                {
+                    "id": 3227296,
+                    "gameId": 432,
+                    "modId": 453546,
+                    "isAvailable": true,
+                    "displayName": "Atmospheric Workshop.zip",
+                    "fileName": "Atmospheric Workshop.zip",
+                    "releaseType": 1,
+                    "fileStatus": 4,
+                    "hashes": [],
+                    "fileDate": "2021-03-05T14:32:48.86Z",
+                    "fileLength": 1965,
+                    "downloadCount": 0,
+                    "downloadUrl": "https://edge.forgecdn.net/files/3227/296/Atmospheric Workshop.zip",
+                    "gameVersions": [
+                        "1.12.2"
+                    ],
+                    "sortableGameVersions": [
+                        {
+                            "gameVersionName": "1.12.2",
+                            "gameVersionPadded": "0000000001.0000000012.0000000002",
+                            "gameVersion": "1.12.2",
+                            "gameVersionReleaseDate": "2017-09-18T05:00:00Z",
+                            "gameVersionTypeId": null
+                        }
+                    ],
+                    "dependencies": [],
+                    "alternateFileId": 0,
+                    "isServerPack": false,
+                    "fileFingerprint": 3856464377,
+                    "modules": [
+                        {
+                            "name": "manifest.json",
+                            "fingerprint": 3018323590
+                        }
+                    ]
+                }
+            ],
+            "latestFilesIndexes": [
+                {
+                    "gameVersion": "1.12.2",
+                    "fileId": 3227296,
+                    "filename": "Atmospheric Workshop.zip",
+                    "releaseType": 1,
+                    "gameVersionTypeId": null,
+                    "modLoader": null
+                }
+            ],
+            "dateCreated": "2021-03-05T14:17:38.117Z",
+            "dateModified": "2021-03-11T04:06:01.507Z",
+            "dateReleased": "2021-03-05T14:32:48.86Z",
+            "allowModDistribution": null,
+            "gamePopularityRank": 55119
+        }
+    ],
+    "pagination": {
+        "index": 0,
+        "pageSize": 50,
+        "resultCount": 4,
+        "totalCount": 4
+    }
+}
