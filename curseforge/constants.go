@@ -35,6 +35,22 @@ const (
 	ModStatusAbandoned       = 8
 	ModStatusDeleted         = 9
 	ModStatusUnderReview     = 10
+
+	FileStatusProcessing         = 1
+	FileStatusChangesRequired    = 2
+	FileStatusUnderReview        = 3
+	FileStatusApproved           = 4
+	FileStatusRejected           = 5
+	FileStatusMalwareDetected    = 6
+	FileStatusDeleted            = 7
+	FileStatusArchived           = 8
+	FileStatusTesting            = 9
+	FileStatusReleased           = 10
+	FileStatusReadyForReview     = 11
+	FileStatusDeprecated         = 12
+	FileStatusBaking             = 13
+	FileStatusAwaitingPublishing = 14
+	FileStatusFailedPublishing   = 15
 )
 
 var (
@@ -49,5 +65,23 @@ var (
 		8:  "Abandoned",
 		9:  "Deleted",
 		10: "UnderReview",
+	}
+
+	FileStatusMap = map[int]string{
+		1:  "Processing",
+		2:  "ChangesRequired",
+		3:  "UnderReview",
+		4:  "Approved",
+		5:  "Rejected",
+		6:  "MalwareDetected",
+		7:  "Deleted",
+		8:  "Archived",
+		9:  "Testing",
+		10: "Released",
+		11: "ReadyForReview",
+		12: "Deprecated",
+		13: "Baking",
+		14: "AwaitingPublishing",
+		15: "FailedPublishing",
 	}
 )

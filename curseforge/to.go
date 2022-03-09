@@ -142,36 +142,22 @@ type ModData struct {
 }
 
 func (f *LatestFiles) TranslateStatus() string {
-	return translateStatus(f.FileStatus)
+	return translateStatus(f.FileStatus, FileStatusMap)
 }
 
 func (g *Game) TranslateStatus() string {
-	return translateStatus(g.Status)
+	//return translateStatus(g.Status)
+	return "Not implemented yet."
 }
 
 func (m *ModData) TranslateStatus() string {
-	s, ok := ModStatusMap[m.Status]
+	return translateStatus(m.Status, ModStatusMap)
+}
+
+func translateStatus(s int, m map[int]string) string {
+	res, ok := m[s]
 	if !ok {
 		return "UNKNOWN"
 	}
-	return s
-}
-
-func translateStatus(s int) string {
-	switch s {
-	case CoreStatusDraft:
-		return CoreStatusTextDraft
-	case CoreStatusTest:
-		return CoreStatusTextTest
-	case CoreStatusPendingReview:
-		return CoreStatusTextPendingReview
-	case CoreStatusRejected:
-		return CoreStatusTextRejected
-	case CoreStatusApproved:
-		return CoreStatusTextApproved
-	case CoreStatusLive:
-		return CoreStatusTextLive
-	default:
-		return "UNKNOWN"
-	}
+	return res
 }
