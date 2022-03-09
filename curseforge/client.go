@@ -74,7 +74,9 @@ func (_c *Client) GetMods(gameId string) (ModsResponse, error) {
 	q := req.URL.Query()
 	q.Add("gameId", gameId)
 	req.URL.RawQuery = q.Encode()
-	log.Println(req.URL.String())
+	if _c.cfg.debug {
+		log.Println(req.URL.String())
+	}
 	res, err := c.Do(req)
 	if err != nil {
 		log.Printf("Failed to execute request: %s", err.Error())
@@ -102,7 +104,9 @@ func (_c *Client) GetModsByCategory(gameId string, modCategorySlug string, searc
 	q.Add("categoryId", modCategorySlug)
 	q.Add("searchFilter", searchFilter)
 	req.URL.RawQuery = q.Encode()
-	log.Println(req.URL.String())
+	if _c.cfg.debug {
+		log.Println(req.URL.String())
+	}
 	res, err := c.Do(req)
 	if err != nil {
 		log.Printf("Failed to execute request: %s", err.Error())
@@ -131,7 +135,9 @@ func (_c *Client) GetCategories(gameId string) (*ModsResponse, error) {
 	q := req.URL.Query()
 	q.Add("gameId", gameId)
 	req.URL.RawQuery = q.Encode()
-	log.Println(req.URL.String())
+	if _c.cfg.debug {
+		log.Println(req.URL.String())
+	}
 	res, err := c.Do(req)
 	if err != nil {
 		log.Printf("Failed to execute request: %s", err.Error())
@@ -173,6 +179,8 @@ func (c *Client) debugResponse(r *http.Response) {
 
 func (c *Client) parseResponse(r *http.Response, result interface{}) {
 	c.debugResponse(r)
-	defer r.Body.Close()
-	json.NewDecoder(r.Body).Decode(result)
+	defer func() {
+		_ = r.Body.Close()
+	}()
+	_ = json.NewDecoder(r.Body).Decode(result)
 }
