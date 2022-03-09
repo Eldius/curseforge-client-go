@@ -140,3 +140,34 @@ type ModData struct {
 	AllowModDistribution interface{}          `json:"allowModDistribution"`
 	GamePopularityRank   int                  `json:"gamePopularityRank"`
 }
+
+func (f *LatestFiles) TranslateStatus() string {
+	return translateStatus(f.FileStatus)
+}
+
+func (g *Game) TranslateStatus() string {
+	return translateStatus(g.Status)
+}
+
+func (m *ModData) TranslateStatus() string {
+	return translateStatus(m.Status)
+}
+
+func translateStatus(s int) string {
+	switch s {
+	case CoreStatusDraft:
+		return CoreStatusTextDraft
+	case CoreStatusTest:
+		return CoreStatusTextTest
+	case CoreStatusPendingReview:
+		return CoreStatusTextPendingReview
+	case CoreStatusRejected:
+		return CoreStatusTextRejected
+	case CoreStatusApproved:
+		return CoreStatusTextApproved
+	case CoreStatusLive:
+		return CoreStatusTextLive
+	default:
+		return "UNKNOWN"
+	}
+}

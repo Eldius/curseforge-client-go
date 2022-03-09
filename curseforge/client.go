@@ -4,10 +4,12 @@ import (
 	"bytes"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io"
 	"io/ioutil"
 	"log"
 	"net/http"
+	"strings"
 	"time"
 )
 
@@ -147,13 +149,24 @@ func (_c *Client) GetCategories(gameId string) (*ModsResponse, error) {
 func (c *Client) debugResponse(r *http.Response) {
 	if c.cfg.debug {
 		reader := r.Body
-		defer reader.Close()
+		defer func() {
+			err := reader.Close()
+			if err != nil {
+				log.Println("Failed to close reader:", err.Error())
+			}
+		}()
 		b, err := ioutil.ReadAll(reader)
 		if err != nil {
 			log.Printf("Failed to execute request: %s", err.Error())
 			return
 		}
-		log.Println("response:", string(b))
+		msg := "---\nheaders:\n"
+		for k, v := range r.Header {
+			msg += fmt.Sprintf(" - %s: [%s]\n", k, strings.Join(v, ", "))
+		}
+		msg += fmt.Sprintf("response:\n%s\n---", string(b))
+		log.Println(msg)
+		log.Println()
 		r.Body = io.NopCloser(bytes.NewReader(b))
 	}
 }
