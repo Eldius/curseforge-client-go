@@ -150,7 +150,11 @@ func (g *Game) TranslateStatus() string {
 }
 
 func (m *ModData) TranslateStatus() string {
-	return translateStatus(m.Status)
+	s, ok := ModStatusMap[m.Status]
+	if !ok {
+		return "UNKNOWN"
+	}
+	return s
 }
 
 func translateStatus(s int) string {

@@ -23,4 +23,31 @@ const (
 
 	CoreApiStatusPrivate = 1
 	CoreApiStatusPublic  = 2
+
+	//ModStatus
+	ModStatusNew             = 1
+	ModStatusChangesRequired = 2
+	ModStatusUnderSoftReview = 3
+	ModStatusApproved        = 4
+	ModStatusRejected        = 5
+	ModStatusChangesMade     = 6
+	ModStatusInactive        = 7
+	ModStatusAbandoned       = 8
+	ModStatusDeleted         = 9
+	ModStatusUnderReview     = 10
+)
+
+var (
+	ModStatusMap = map[int]string{
+		1:  "New",
+		2:  "ChangesRequired",
+		3:  "UnderSoftReview",
+		4:  "Approved",
+		5:  "Rejected",
+		6:  "ChangesMade",
+		7:  "Inactive",
+		8:  "Abandoned",
+		9:  "Deleted",
+		10: "UnderReview",
+	}
 )
