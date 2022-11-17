@@ -1,4 +1,4 @@
-package curseforge
+package client
 
 import (
     "github.com/eldius/curseforge-client-go/client/config"
