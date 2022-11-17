@@ -1,0 +1,296 @@
+{
+    "data": {
+        "id": 426926,
+        "gameId": 432,
+        "name": "All the Mods 7 - ATM7 - 1.18.2",
+        "slug": "all-the-mods-7",
+        "links": {
+            "websiteUrl": "https://www.curseforge.com/minecraft/modpacks/all-the-mods-7",
+            "wikiUrl": "",
+            "issuesUrl": "https://github.com/AllTheMods/ATM-7/issues",
+            "sourceUrl": "https://github.com/AllTheMods/ATM-7"
+        },
+        "summary": "1.18  Modpack with everyone's favorite mods as well as a ton of new mods to try out. ",
+        "status": 4,
+        "downloadCount": 1052019.0,
+        "isFeatured": false,
+        "primaryCategoryId": 4472,
+        "categories": [
+            {
+                "id": 4484,
+                "gameId": 432,
+                "name": "Multiplayer",
+                "slug": "multiplayer",
+                "url": "https://www.curseforge.com/minecraft/modpacks/multiplayer",
+                "iconUrl": "https://media.forgecdn.net/avatars/14/481/635596792838491141.png",
+                "dateModified": "2015-02-16T16:28:03.85Z",
+                "isClass": false,
+                "classId": 4471,
+                "parentCategoryId": 4471
+            },
+            {
+                "id": 4473,
+                "gameId": 432,
+                "name": "Magic",
+                "slug": "magic",
+                "url": "https://www.curseforge.com/minecraft/modpacks/magic",
+                "iconUrl": "https://media.forgecdn.net/avatars/14/474/635596760578719019.png",
+                "dateModified": "2015-02-16T15:34:17.873Z",
+                "isClass": false,
+                "classId": 4471,
+                "parentCategoryId": 4471
+            },
+            {
+                "id": 4476,
+                "gameId": 432,
+                "name": "Exploration",
+                "slug": "exploration",
+                "url": "https://www.curseforge.com/minecraft/modpacks/exploration",
+                "iconUrl": "https://media.forgecdn.net/avatars/14/486/635596815896417213.png",
+                "dateModified": "2015-02-16T17:06:29.69Z",
+                "isClass": false,
+                "classId": 4471,
+                "parentCategoryId": 4471
+            },
+            {
+                "id": 4472,
+                "gameId": 432,
+                "name": "Tech",
+                "slug": "tech",
+                "url": "https://www.curseforge.com/minecraft/modpacks/tech",
+                "iconUrl": "https://media.forgecdn.net/avatars/14/479/635596761534662757.png",
+                "dateModified": "2015-02-16T15:35:53.467Z",
+                "isClass": false,
+                "classId": 4471,
+                "parentCategoryId": 4471
+            }
+        ],
+        "classId": 4471,
+        "authors": [
+            {
+                "id": 406889,
+                "name": "ATMTeam",
+                "url": "https://www.curseforge.com/members/36387323-atmteam?username=atmteam"
+            }
+        ],
+        "logo": {
+            "id": 391574,
+            "modId": 426926,
+            "title": "637584581193129752.jpeg",
+            "description": "",
+            "thumbnailUrl": "https://media.forgecdn.net/avatars/thumbnails/391/574/256/256/637584581193129752.jpeg",
+            "url": "https://media.forgecdn.net/avatars/391/574/637584581193129752.jpeg"
+        },
+        "screenshots": [
+            {
+                "id": 430157,
+                "modId": 426926,
+                "title": "Worldgen",
+                "description": "",
+                "thumbnailUrl": "https://media.forgecdn.net/attachments/thumbnails/430/157/310/172/2022-02-02_20.png",
+                "url": "https://media.forgecdn.net/attachments/430/157/2022-02-02_20.png"
+            }
+        ],
+        "mainFileId": 3770428,
+        "latestFiles": [
+            {
+                "id": 3755894,
+                "gameId": 432,
+                "modId": 426926,
+                "isAvailable": true,
+                "displayName": "All the Mods 7-0.3.10",
+                "fileName": "All the Mods 7-0.3.10.zip",
+                "releaseType": 3,
+                "fileStatus": 4,
+                "hashes": [
+                    {
+                        "value": "4ee075626a7a14d5e2b573cac773fd458843ac1b",
+                        "algo": 1
+                    },
+                    {
+                        "value": "509dbaf68bf5a022d15d9ece2422ab2f",
+                        "algo": 2
+                    }
+                ],
+                "fileDate": "2022-04-16T19:02:43.883Z",
+                "fileLength": 6325206,
+                "downloadCount": 899,
+                "downloadUrl": "https://edge.forgecdn.net/files/3755/894/All the Mods 7-0.3.10.zip",
+                "gameVersions": [
+                    "1.18.2"
+                ],
+                "sortableGameVersions": [
+                    {
+                        "gameVersionName": "1.18.2",
+                        "gameVersionPadded": "0000000001.0000000018.0000000002",
+                        "gameVersion": "1.18.2",
+                        "gameVersionReleaseDate": "2022-02-28T14:23:37.723Z",
+                        "gameVersionTypeId": 73250
+                    }
+                ],
+                "dependencies": [],
+                "alternateFileId": 0,
+                "isServerPack": false,
+                "serverPackFileId": 3755913,
+                "fileFingerprint": 4258657102,
+                "modules": [
+                    {
+                        "name": "manifest.json",
+                        "fingerprint": 846884148
+                    }
+                ]
+            },
+            {
+                "id": 3761142,
+                "gameId": 432,
+                "modId": 426926,
+                "isAvailable": true,
+                "displayName": "All the Mods 7-0.3.13",
+                "fileName": "All the Mods 7-0.3.13.zip",
+                "releaseType": 1,
+                "fileStatus": 4,
+                "hashes": [
+                    {
+                        "value": "704783c308d8fd0bba28e6e18ca595fed2d1ed35",
+                        "algo": 1
+                    },
+                    {
+                        "value": "222f5a1e77687cc06b4d5c630d3ef080",
+                        "algo": 2
+                    }
+                ],
+                "fileDate": "2022-04-21T01:17:52.903Z",
+                "fileLength": 6325671,
+                "downloadCount": 10509,
+                "downloadUrl": "https://edge.forgecdn.net/files/3761/142/All the Mods 7-0.3.13.zip",
+                "gameVersions": [
+                    "1.18.2"
+                ],
+                "sortableGameVersions": [
+                    {
+                        "gameVersionName": "1.18.2",
+                        "gameVersionPadded": "0000000001.0000000018.0000000002",
+                        "gameVersion": "1.18.2",
+                        "gameVersionReleaseDate": "2022-02-28T14:23:37.723Z",
+                        "gameVersionTypeId": 73250
+                    }
+                ],
+                "dependencies": [],
+                "alternateFileId": 0,
+                "isServerPack": false,
+                "serverPackFileId": 3761708,
+                "fileFingerprint": 1421888931,
+                "modules": [
+                    {
+                        "name": "manifest.json",
+                        "fingerprint": 1208704968
+                    }
+                ]
+            },
+            {
+                "id": 3770428,
+                "gameId": 432,
+                "modId": 426926,
+                "isAvailable": true,
+                "displayName": "All the Mods 7-0.3.18",
+                "fileName": "All the Mods 7-0.3.18.zip",
+                "releaseType": 1,
+                "fileStatus": 4,
+                "hashes": [
+                    {
+                        "value": "29becbf499af10b122af152010b179264a7f2409",
+                        "algo": 1
+                    },
+                    {
+                        "value": "e7eb2c2f837e4ae298d6198af122b08a",
+                        "algo": 2
+                    }
+                ],
+                "fileDate": "2022-04-27T03:11:25.62Z",
+                "fileLength": 6322539,
+                "downloadCount": 49,
+                "downloadUrl": "https://edge.forgecdn.net/files/3770/428/All the Mods 7-0.3.18.zip",
+                "gameVersions": [
+                    "1.18.2",
+                    "Forge"
+                ],
+                "sortableGameVersions": [
+                    {
+                        "gameVersionName": "1.18.2",
+                        "gameVersionPadded": "0000000001.0000000018.0000000002",
+                        "gameVersion": "1.18.2",
+                        "gameVersionReleaseDate": "2022-02-28T14:23:37.723Z",
+                        "gameVersionTypeId": 73250
+                    },
+                    {
+                        "gameVersionName": "Forge",
+                        "gameVersionPadded": "0",
+                        "gameVersion": "",
+                        "gameVersionReleaseDate": "2019-08-01T00:00:00Z",
+                        "gameVersionTypeId": 68441
+                    }
+                ],
+                "dependencies": [],
+                "alternateFileId": 0,
+                "isServerPack": false,
+                "serverPackFileId": 3770434,
+                "fileFingerprint": 2079745757,
+                "modules": [
+                    {
+                        "name": "manifest.json",
+                        "fingerprint": 573437222
+                    }
+                ]
+            }
+        ],
+        "latestFilesIndexes": [
+            {
+                "gameVersion": "1.18.2",
+                "fileId": 3770428,
+                "filename": "All the Mods 7-0.3.18.zip",
+                "releaseType": 1,
+                "gameVersionTypeId": 73250,
+                "modLoader": null
+            },
+            {
+                "gameVersion": "1.18.2",
+                "fileId": 3755894,
+                "filename": "All the Mods 7-0.3.10.zip",
+                "releaseType": 3,
+                "gameVersionTypeId": 73250,
+                "modLoader": null
+            },
+            {
+                "gameVersion": "1.18.1",
+                "fileId": 3666955,
+                "filename": "All the Mods 7-0.2.45.zip",
+                "releaseType": 1,
+                "gameVersionTypeId": 73250,
+                "modLoader": null
+            },
+            {
+                "gameVersion": "1.18",
+                "fileId": 3559090,
+                "filename": "All the Mods 7-0.1.12.zip",
+                "releaseType": 1,
+                "gameVersionTypeId": 73250,
+                "modLoader": null
+            },
+            {
+                "gameVersion": "1.17.1",
+                "fileId": 3529593,
+                "filename": "All the Mods 7-0.0.32.zip",
+                "releaseType": 1,
+                "gameVersionTypeId": 73242,
+                "modLoader": null
+            }
+        ],
+        "dateCreated": "2020-12-09T02:24:03.447Z",
+        "dateModified": "2022-04-27T03:31:06.133Z",
+        "dateReleased": "2022-04-27T03:27:30.453Z",
+        "allowModDistribution": true,
+        "gamePopularityRank": 1405,
+        "isAvailable": true,
+        "thumbsUpCount": 0
+    }
+}

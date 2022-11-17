@@ -1,6 +1,6 @@
 module github.com/eldius/curseforge-client-go
 
-go 1.18
+go 1.19
 
 require gopkg.in/h2non/gock.v1 v1.1.2
 

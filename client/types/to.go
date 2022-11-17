@@ -1,16 +1,24 @@
-package curseforge
+package types
 
-import "time"
+import (
+	"strings"
+	"time"
+)
 
+// GamesResponse is the games search response
 type GamesResponse struct {
 	Data       []Game     `json:"data"`
 	Pagination Pagination `json:"pagination"`
 }
+
+// Assets is an asset representation
 type Assets struct {
 	IconURL  string `json:"iconUrl"`
 	TileURL  string `json:"tileUrl"`
 	CoverURL string `json:"coverUrl"`
 }
+
+// Game is the game info
 type Game struct {
 	ID           int       `json:"id"`
 	Name         string    `json:"name"`
@@ -20,6 +28,8 @@ type Game struct {
 	Status       int       `json:"status"`
 	APIStatus    int       `json:"apiStatus"`
 }
+
+// Pagination is the API response pagination info
 type Pagination struct {
 	Index       int `json:"index"`
 	PageSize    int `json:"pageSize"`
@@ -27,16 +37,21 @@ type Pagination struct {
 	TotalCount  int `json:"totalCount"`
 }
 
+// ModsResponse is the mod search response representation
 type ModsResponse struct {
 	Data       []ModData  `json:"data"`
 	Pagination Pagination `json:"pagination"`
 }
+
+// Links is the mod links representation
 type Links struct {
 	WebsiteURL string      `json:"websiteUrl"`
 	WikiURL    string      `json:"wikiUrl"`
 	IssuesURL  interface{} `json:"issuesUrl"`
 	SourceURL  interface{} `json:"sourceUrl"`
 }
+
+// Categories represents mod categories
 type Categories struct {
 	ID               int       `json:"id"`
 	GameID           int       `json:"gameId"`
@@ -49,11 +64,15 @@ type Categories struct {
 	ClassID          int       `json:"classId"`
 	ParentCategoryID int       `json:"parentCategoryId"`
 }
+
+// Authors is the Author info
 type Authors struct {
 	ID   int    `json:"id"`
 	Name string `json:"name"`
 	URL  string `json:"url"`
 }
+
+// Logo is the mod logo representation
 type Logo struct {
 	ID           int    `json:"id"`
 	ModID        int    `json:"modId"`
@@ -62,6 +81,8 @@ type Logo struct {
 	ThumbnailURL string `json:"thumbnailUrl"`
 	URL          string `json:"url"`
 }
+
+// Screenshots represents a screenshot data
 type Screenshots struct {
 	ID           int    `json:"id"`
 	ModID        int    `json:"modId"`
@@ -70,10 +91,14 @@ type Screenshots struct {
 	ThumbnailURL string `json:"thumbnailUrl"`
 	URL          string `json:"url"`
 }
+
+// Hashes is a file hash info
 type Hashes struct {
 	Value string `json:"value"`
 	Algo  int    `json:"algo"`
 }
+
+// SortableGameVersions have game version infos
 type SortableGameVersions struct {
 	GameVersionName        string    `json:"gameVersionName"`
 	GameVersionPadded      string    `json:"gameVersionPadded"`
@@ -81,11 +106,15 @@ type SortableGameVersions struct {
 	GameVersionReleaseDate time.Time `json:"gameVersionReleaseDate"`
 	GameVersionTypeID      int       `json:"gameVersionTypeId"`
 }
+
+// Modules represents a module(?)
 type Modules struct {
 	Name        string `json:"name"`
 	Fingerprint int64  `json:"fingerprint"`
 }
-type LatestFiles struct {
+
+// File represents a file
+type File struct {
 	ID                   int                    `json:"id"`
 	GameID               int                    `json:"gameId"`
 	ModID                int                    `json:"modId"`
@@ -104,10 +133,13 @@ type LatestFiles struct {
 	Dependencies         []interface{}          `json:"dependencies"`
 	AlternateFileID      int                    `json:"alternateFileId"`
 	IsServerPack         bool                   `json:"isServerPack"`
+	ServerPackFileID     int                    `json:"serverPackFileId"`
 	FileFingerprint      int64                  `json:"fileFingerprint"`
 	Modules              []Modules              `json:"modules"`
 }
-type LatestFilesIndexes struct {
+
+// FileIndexes represents file indexes
+type FileIndexes struct {
 	GameVersion       string `json:"gameVersion"`
 	FileID            int    `json:"fileId"`
 	Filename          string `json:"filename"`
@@ -115,41 +147,51 @@ type LatestFilesIndexes struct {
 	GameVersionTypeID int    `json:"gameVersionTypeId"`
 	ModLoader         int    `json:"modLoader"`
 }
+
+// ModData is a mod info representation
 type ModData struct {
-	ID                   int                  `json:"id"`
-	GameID               int                  `json:"gameId"`
-	Name                 string               `json:"name"`
-	Slug                 string               `json:"slug"`
-	Links                Links                `json:"links"`
-	Summary              string               `json:"summary"`
-	Status               int                  `json:"status"`
-	DownloadCount        float64              `json:"downloadCount"`
-	IsFeatured           bool                 `json:"isFeatured"`
-	PrimaryCategoryID    int                  `json:"primaryCategoryId"`
-	Categories           []Categories         `json:"categories"`
-	ClassID              int                  `json:"classId"`
-	Authors              []Authors            `json:"authors"`
-	Logo                 Logo                 `json:"logo"`
-	Screenshots          []Screenshots        `json:"screenshots"`
-	MainFileID           int                  `json:"mainFileId"`
-	LatestFiles          []LatestFiles        `json:"latestFiles"`
-	LatestFilesIndexes   []LatestFilesIndexes `json:"latestFilesIndexes"`
-	DateCreated          time.Time            `json:"dateCreated"`
-	DateModified         time.Time            `json:"dateModified"`
-	DateReleased         time.Time            `json:"dateReleased"`
-	AllowModDistribution interface{}          `json:"allowModDistribution"`
-	GamePopularityRank   int                  `json:"gamePopularityRank"`
+	ID                   int           `json:"id"`
+	GameID               int           `json:"gameId"`
+	Name                 string        `json:"name"`
+	Slug                 string        `json:"slug"`
+	Links                Links         `json:"links"`
+	Summary              string        `json:"summary"`
+	Status               int           `json:"status"`
+	DownloadCount        float64       `json:"downloadCount"`
+	IsFeatured           bool          `json:"isFeatured"`
+	PrimaryCategoryID    int           `json:"primaryCategoryId"`
+	Categories           []Categories  `json:"categories"`
+	ClassID              int           `json:"classId"`
+	Authors              []Authors     `json:"authors"`
+	Logo                 Logo          `json:"logo"`
+	Screenshots          []Screenshots `json:"screenshots"`
+	MainFileID           int           `json:"mainFileId"`
+	LatestFiles          []File        `json:"latestFiles"`
+	LatestFilesIndexes   []FileIndexes `json:"latestFilesIndexes"`
+	DateCreated          time.Time     `json:"dateCreated"`
+	DateModified         time.Time     `json:"dateModified"`
+	DateReleased         time.Time     `json:"dateReleased"`
+	AllowModDistribution interface{}   `json:"allowModDistribution"`
+	GamePopularityRank   int           `json:"gamePopularityRank"`
 }
 
-func (f *LatestFiles) TranslateStatus() string {
+// GetFileDownloadURLResponse file download URL
+type GetFileDownloadURLResponse struct {
+	URL string `json:"data"`
+}
+
+// TranslateStatus translates file status to text
+func (f *File) TranslateStatus() string {
 	return translateStatus(f.FileStatus, FileStatusMap)
 }
 
+// TranslateStatus translates file status to text
 func (g *Game) TranslateStatus() string {
 	//return translateStatus(g.Status)
 	return "Not implemented yet."
 }
 
+// TranslateStatus translates file status to text
 func (m *ModData) TranslateStatus() string {
 	return translateStatus(m.Status, ModStatusMap)
 }
@@ -160,4 +202,27 @@ func translateStatus(s int, m map[int]string) string {
 		return "UNKNOWN"
 	}
 	return res
+}
+
+// GetLatestFile returns the latest mod file
+func (m *ModData) GetLatestFile() *File {
+	if len(m.LatestFiles) < 1 {
+		return nil
+	}
+	return &m.LatestFiles[0]
+}
+
+// GetLatestFileGameVersions returns the latest file version data
+func (m *ModData) GetLatestFileGameVersions() string {
+	f := m.GetLatestFile()
+	if f == nil {
+		return ""
+	}
+
+	return strings.Join(f.GameVersions, ", ")
+}
+
+// SingleModResult is the result of APIs single mod data response
+type SingleModResult struct {
+	Data ModData `json:"data"`
 }
