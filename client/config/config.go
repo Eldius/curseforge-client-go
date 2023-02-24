@@ -23,33 +23,22 @@ type Config struct {
 	debug   bool
 }
 
+// NewConfig creates a new client Config with default values
+func NewConfig(apiKey string, cfgs ...CfgFunc) *Config {
+	cfg := NewDefaultConfig(apiKey)
+	for _, c := range cfgs {
+		c(cfg)
+	}
+	return cfg
+}
+
 // NewDefaultConfig creates a new client Config with default values
 func NewDefaultConfig(apiKey string) *Config {
-	return NewConfigWithBaseURL(
-		apiKey,
-		CurseforgeBaseURL,
-		defaultTimeout,
-		false,
-	)
-}
-
-// NewConfig creates a new client Config
-func NewConfig(apiKey string, timeout time.Duration, debug bool) *Config {
-	return NewConfigWithBaseURL(
-		apiKey,
-		CurseforgeBaseURL,
-		timeout,
-		debug,
-	)
-}
-
-// NewConfigWithBaseURL creates a new client Config
-func NewConfigWithBaseURL(apiKey string, baseURL string, timeout time.Duration, debug bool) *Config {
 	return &Config{
 		apiKey:  apiKey,
-		baseURL: baseURL,
-		timeout: timeout,
-		debug:   debug,
+		baseURL: CurseforgeBaseURL,
+		timeout: defaultTimeout,
+		debug:   false,
 	}
 }
 
@@ -75,4 +64,36 @@ func (cfg *Config) NewGetRequest(c *http.Client, path string) (*http.Request, er
 	req.Header.Add(xAPIKeyHeader, cfg.apiKey)
 
 	return req, nil
+}
+
+/*
+CfgFunc is configuration function
+*/
+type CfgFunc func(config *Config)
+
+/*
+WithEndpoint to define the API endpoint to be used
+*/
+func WithEndpoint(endpoint string) CfgFunc {
+	return func(cfg *Config) {
+		cfg.baseURL = endpoint
+	}
+}
+
+/*
+WithTimeout to define the API client timeout to be used
+*/
+func WithTimeout(timeout time.Duration) CfgFunc {
+	return func(cfg *Config) {
+		cfg.timeout = timeout
+	}
+}
+
+/*
+EnableDebug to define the API endpoint to be used
+*/
+func EnableDebug(enabled bool) CfgFunc {
+	return func(cfg *Config) {
+		cfg.debug = enabled
+	}
 }
