@@ -2,6 +2,10 @@ package cmd
 
 import (
 	"fmt"
+	"github.com/eldius/curseforge-client-go/client"
+	"github.com/eldius/curseforge-client-go/internal/config"
+	"github.com/eldius/curseforge-client-go/internal/model"
+	"github.com/eldius/curseforge-client-go/internal/persistence"
 
 	"github.com/spf13/cobra"
 )
@@ -13,6 +17,16 @@ var searchCmd = &cobra.Command{
 	Long:  `Search for a Mod.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("search called")
+		c := client.NewClient(config.GetCurseforgeAPIKey())
+		_, _ = persistence.GetDB()
+		res, err := c.GetMods("432")
+		if err != nil {
+			panic(err)
+		}
+
+		for _, m := range res.Data {
+			fmt.Println(model.NewMod(m))
+		}
 	},
 }
 

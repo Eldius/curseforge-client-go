@@ -1,4 +1,4 @@
-package cli_config
+package config
 
 const (
 	LogFormatJSON = "json"
@@ -7,4 +7,6 @@ const (
 
 	LogFormatKey = "logs.format"
 	LogLevelKey  = "logs.level"
+
+	CurseforgeAPIKeyKey = "curseforge.api_key"
 )

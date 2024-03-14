@@ -1,10 +1,7 @@
-/*
-Copyright © 2024 NAME HERE <EMAIL ADDRESS>
-*/
 package cmd
 
 import (
-	"github.com/eldius/curseforge-client-go/internal/cli_config"
+	"github.com/eldius/curseforge-client-go/internal/config"
 	"os"
 
 	"github.com/spf13/cobra"
@@ -16,7 +13,7 @@ var rootCmd = &cobra.Command{
 	Short: "A simple CLI to interact with CurseForge API",
 	Long:  `A simple CLI to interact with CurseForge API.`,
 	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return cli_config.Setup(cfgFile)
+		return config.Setup(cfgFile)
 	},
 	// Uncomment the following line if your bare application
 	// has an action associated with it:

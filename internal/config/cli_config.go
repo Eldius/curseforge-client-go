@@ -1,4 +1,4 @@
-package cli_config
+package config
 
 import (
 	"github.com/spf13/viper"
@@ -19,4 +19,8 @@ func GetLogLevel() string {
 
 func GetLogOutput() string {
 	return viper.GetString("logs.output_to_file")
+}
+
+func GetCurseforgeAPIKey() string {
+	return viper.GetString(CurseforgeAPIKeyKey)
 }

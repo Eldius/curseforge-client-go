@@ -45,16 +45,16 @@ type ModsResponse struct {
 
 // Links is the mod links representation
 type Links struct {
-	WebsiteURL string      `json:"websiteUrl"`
-	WikiURL    string      `json:"wikiUrl"`
-	IssuesURL  interface{} `json:"issuesUrl"`
-	SourceURL  interface{} `json:"sourceUrl"`
+	WebsiteURL string `json:"websiteUrl"`
+	WikiURL    string `json:"wikiUrl"`
+	IssuesURL  string `json:"issuesUrl"`
+	SourceURL  string `json:"sourceUrl"`
 }
 
 // Categories represents mod categories
 type Categories struct {
-	ID               int       `json:"id"`
-	GameID           int       `json:"gameId"`
+	ID               int64     `json:"id"`
+	GameID           int64     `json:"gameId"`
 	Name             string    `json:"name"`
 	Slug             string    `json:"slug"`
 	URL              string    `json:"url"`
@@ -67,7 +67,7 @@ type Categories struct {
 
 // Authors is the Author info
 type Authors struct {
-	ID   int    `json:"id"`
+	ID   int64  `json:"id"`
 	Name string `json:"name"`
 	URL  string `json:"url"`
 }
@@ -150,8 +150,8 @@ type FileIndexes struct {
 
 // ModData is a mod info representation
 type ModData struct {
-	ID                   int           `json:"id"`
-	GameID               int           `json:"gameId"`
+	ID                   int64         `json:"id"`
+	GameID               int64         `json:"gameId"`
 	Name                 string        `json:"name"`
 	Slug                 string        `json:"slug"`
 	Links                Links         `json:"links"`
@@ -161,7 +161,7 @@ type ModData struct {
 	IsFeatured           bool          `json:"isFeatured"`
 	PrimaryCategoryID    int           `json:"primaryCategoryId"`
 	Categories           []Categories  `json:"categories"`
-	ClassID              int           `json:"classId"`
+	ClassID              int64         `json:"classId"`
 	Authors              []Authors     `json:"authors"`
 	Logo                 Logo          `json:"logo"`
 	Screenshots          []Screenshots `json:"screenshots"`

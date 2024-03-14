@@ -26,3 +26,6 @@ endif
 	@echo "next version: v$(next_version)"
 	git tag "v$(next_version)"
 	git push origin "v$(next_version)"
+
+search:
+	go run ./cmd/cli/ search
