@@ -1,6 +1,9 @@
 package model
 
-import "github.com/eldius/curseforge-client-go/client/types"
+import (
+	"encoding/json"
+	"github.com/eldius/curseforge-client-go/client/types"
+)
 
 type ModCategory struct {
 	Name    string
@@ -60,4 +63,24 @@ func NewMod(md types.ModData) Mod {
 	m.ClassID = md.ClassID
 
 	return *m
+}
+
+func (m Mod) ToDBParams() map[string]interface{} {
+	v, _ := json.Marshal(m.Versions)
+	c, _ := json.Marshal(m.Category)
+	a, _ := json.Marshal(m.Authors)
+
+	return map[string]interface{}{
+		"id":          m.ID,
+		"name":        m.Name,
+		"class_id":    m.ClassID,
+		"url":         m.URL,
+		"source_url":  m.SourceURL,
+		"wiki_url":    m.WikiURL,
+		"description": m.Description,
+		"game_id":     m.GameID,
+		"authors":     string(a),
+		"versions":    string(v),
+		"categories":  string(c),
+	}
 }
