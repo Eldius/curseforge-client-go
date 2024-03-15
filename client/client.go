@@ -8,7 +8,6 @@ import (
 	"github.com/eldius/curseforge-client-go/client/config"
 	"github.com/eldius/curseforge-client-go/client/types"
 	"io"
-	"log"
 	"net/http"
 	"strings"
 )
@@ -25,6 +24,23 @@ const (
 type Logger interface {
 	Printf(format string, v ...any)
 	Println(v ...any)
+	DebugRequest(res *http.Response)
+}
+
+type noopLogger struct {
+	Logger
+}
+
+func (l noopLogger) Printf(_ string, _ ...any) {
+	return
+}
+
+func (l noopLogger) Println(_ ...any) {
+	return
+}
+
+func (l noopLogger) DebugRequest(_ *http.Response) {
+	return
 }
 
 // Client is the curseforge client itself
@@ -37,7 +53,7 @@ type Client struct {
 func NewClientWithConfig(cfg *config.Config) *Client {
 	return &Client{
 		cfg: cfg,
-		log: log.Default(),
+		log: noopLogger{},
 	}
 }
 
@@ -67,7 +83,10 @@ func (_c *Client) GetGames() (types.GamesResponse, error) {
 		_c.log.Printf("Failed to execute request: %s", err.Error())
 		return result, types.Wrap(err, "failed to execute request", -1)
 	}
-	_c.parseResponse(res, &result)
+	if err := _c.parseResponse(res, &result); err != nil {
+		err = fmt.Errorf("parsing API response")
+		return result, err
+	}
 
 	return result, nil
 }
@@ -97,7 +116,11 @@ func (_c *Client) GetMods(gameID string, term string) (types.ModsResponse, error
 		_c.log.Printf("Failed to execute request: %s", err.Error())
 		return result, types.Wrap(err, "failed to execute request", -1)
 	}
-	_c.parseResponse(res, &result)
+
+	if err := _c.parseResponse(res, &result); err != nil {
+		err = fmt.Errorf("parsing API response")
+		return result, err
+	}
 
 	_c.log.Println("code:", res.StatusCode)
 
@@ -132,7 +155,10 @@ func (_c *Client) GetModsByCategory(gameID string, modCategorySlug string, searc
 		return nil, types.Wrap(errors.New("http response error"), "api request error", res.StatusCode)
 	}
 
-	_c.parseResponse(res, &result)
+	if err := _c.parseResponse(res, &result); err != nil {
+		err = fmt.Errorf("parsing API response")
+		return nil, err
+	}
 
 	return result, nil
 }
@@ -160,7 +186,10 @@ func (_c *Client) GetCategories(gameID string) (*types.ModsResponse, error) {
 		_c.log.Printf("Failed to execute request: %s", err.Error())
 		return result, types.Wrap(err, types.ErrRequestErrorMsg, 0)
 	}
-	_c.parseResponse(res, &result)
+	if err := _c.parseResponse(res, &result); err != nil {
+		err = fmt.Errorf("parsing API response")
+		return nil, err
+	}
 
 	if res.StatusCode != http.StatusOK {
 		return nil, errors.New("http response error: " + res.Status)
@@ -192,7 +221,10 @@ func (_c *Client) GetModByID(modID string) (*types.SingleModResult, error) {
 		return nil, errors.New("http response error: " + res.Status)
 	}
 
-	_c.parseResponse(res, &result)
+	if err := _c.parseResponse(res, &result); err != nil {
+		err = fmt.Errorf("parsing API response")
+		return nil, err
+	}
 
 	return result, nil
 }
@@ -221,7 +253,10 @@ func (_c *Client) GetFileDownloadURI(modID string, fileID string) (*types.GetFil
 		return nil, errors.New("http response error: " + res.Status)
 	}
 
-	_c.parseResponse(res, &result)
+	if err := _c.parseResponse(res, &result); err != nil {
+		err = fmt.Errorf("parsing API response")
+		return nil, err
+	}
 
 	return result, nil
 }
@@ -251,10 +286,13 @@ func (_c *Client) debugResponse(r *http.Response) {
 	}
 }
 
-func (_c *Client) parseResponse(r *http.Response, result interface{}) {
-	_c.debugResponse(r)
+func (_c *Client) parseResponse(res *http.Response, result interface{}) error {
+	if _c.cfg.IsDebug() {
+		_c.log.DebugRequest(res)
+	}
+
 	defer func() {
-		_ = r.Body.Close()
+		_ = res.Body.Close()
 	}()
-	_ = json.NewDecoder(r.Body).Decode(result)
+	return json.NewDecoder(res.Body).Decode(result)
 }

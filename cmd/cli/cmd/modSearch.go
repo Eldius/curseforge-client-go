@@ -19,7 +19,7 @@ var modSearchCmd = &cobra.Command{
 			config.GetCurseforgeAPIKey(),
 			client_config.EnableDebug(true),
 		))
-		c.SetLogger(logger.ClientLogger{})
+		c.SetLogger(logger.SlogClientLogger{})
 		mods, err := c.GetMods(searchOptions.gameID, searchOptions.searchTerm)
 		if err != nil {
 			err = fmt.Errorf("looking for mods")
@@ -47,5 +47,5 @@ func init() {
 
 	modSearchCmd.Flags().StringVar(&searchOptions.searchTerm, "term", "", "Search term to use")
 	modSearchCmd.Flags().StringVar(&searchOptions.gameVersion, "game-version", "", "Game version")
-	modSearchCmd.Flags().StringVar(&searchOptions.gameVersion, "game-id", "", "Game ID (from game search)")
+	modSearchCmd.Flags().StringVar(&searchOptions.gameID, "game-id", "", "Game ID (from game search)")
 }
