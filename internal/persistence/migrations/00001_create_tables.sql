@@ -5,6 +5,7 @@ CREATE TABLE IF NOT EXISTS mod_info (
     , name VARCHAR(255)
     , url VARCHAR(255)
     , source_url VARCHAR(255)
+    , wiki_url VARCHAR(255)
     , description TEXT
     , class_id NUMBER
     , game_id NUMBER

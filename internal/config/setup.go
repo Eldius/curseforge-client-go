@@ -14,7 +14,18 @@ import (
 )
 
 var (
-	logKeys = []string{"host", "service.name", "level", "message", "time"}
+	logKeys = []string{
+		"host",
+		"service.name",
+		"level",
+		"message",
+		"time",
+		"error",
+		"source",
+		"function",
+		"file",
+		"line",
+	}
 )
 
 // Setup configures app parameters

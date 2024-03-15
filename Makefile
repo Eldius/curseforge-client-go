@@ -28,4 +28,4 @@ endif
 	git push origin "v$(next_version)"
 
 search-create:
-	go run ./cmd/cli mod search --term create --game-id 432 --debug --game-version 1.20.1
+	go run ./cmd/cli mod search --term create --game-id 432 --debug --game-version 1.20.1 --save-cache
