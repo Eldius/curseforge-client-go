@@ -1,6 +1,6 @@
 module github.com/eldius/curseforge-client-go
 
-go 1.22.0
+go 1.22.1
 
 require (
 	github.com/glebarez/go-sqlite v1.22.0

@@ -73,7 +73,7 @@ func (_c *Client) GetGames() (types.GamesResponse, error) {
 }
 
 // GetMods lists mods for a game from API
-func (_c *Client) GetMods(gameID string) (types.ModsResponse, error) {
+func (_c *Client) GetMods(gameID string, term string) (types.ModsResponse, error) {
 	var result types.ModsResponse
 	c := _c.cfg.NewHTTPClient()
 
@@ -85,9 +85,12 @@ func (_c *Client) GetMods(gameID string) (types.ModsResponse, error) {
 
 	q := req.URL.Query()
 	q.Add("gameId", gameID)
+	if strings.TrimSpace(term) != "" {
+		q.Add("searchFilter", term)
+	}
 	req.URL.RawQuery = q.Encode()
 	if _c.cfg.IsDebug() {
-		_c.log.Println(req.URL.String())
+		_c.log.Printf("url: %s", req.URL.String())
 	}
 	res, err := c.Do(req)
 	if err != nil {

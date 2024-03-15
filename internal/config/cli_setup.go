@@ -9,7 +9,12 @@ import (
 	"log/slog"
 	"os"
 	"path/filepath"
+	"slices"
 	"strings"
+)
+
+var (
+	logKeys = []string{"host", "service.name", "level", "message", "time"}
 )
 
 // Setup configures app parameters
@@ -26,10 +31,10 @@ func Setup(cfgFile string) error {
 		}
 
 		// Search config in home directory with name ".mock-server-go" (without extension).
-		viper.AddConfigPath(filepath.Join(home, ".bign-price-fetcher"))
+		viper.AddConfigPath(filepath.Join(home, ".curseforge-client"))
 		viper.AddConfigPath(filepath.Join(home))
 		viper.SetConfigType("yaml")
-		viper.SetConfigName("bign")
+		viper.SetConfigName("curseforge")
 	}
 
 	SetDefaults()
@@ -40,6 +45,7 @@ func Setup(cfgFile string) error {
 	// If a config file is found, read it in.
 	if err := viper.ReadInConfig(); err == nil {
 		log.Println("Using config file:", viper.ConfigFileUsed())
+	} else {
 		return err
 	}
 
@@ -79,15 +85,30 @@ func setupLogs() error {
 		}
 		w = io.MultiWriter(w, f)
 	}
+
+	replaceAttrFunc := func(groups []string, a slog.Attr) slog.Attr {
+		if slices.Contains(logKeys, a.Key) {
+			return a
+		}
+		if a.Key == "msg" {
+			a.Key = "message"
+			return a
+		}
+		a.Key = fmt.Sprintf("custom.%s.%s", serviceName, a.Key)
+		return a
+	}
+
 	if GetLogFormat() == LogFormatJSON {
 		h = slog.NewJSONHandler(w, &slog.HandlerOptions{
-			AddSource: true,
-			Level:     parseLogLevel(GetLogLevel()),
+			AddSource:   true,
+			Level:       parseLogLevel(GetLogLevel()),
+			ReplaceAttr: replaceAttrFunc,
 		})
 	} else {
 		h = slog.NewTextHandler(w, &slog.HandlerOptions{
-			AddSource: true,
-			Level:     parseLogLevel(GetLogLevel()),
+			AddSource:   true,
+			Level:       parseLogLevel(GetLogLevel()),
+			ReplaceAttr: replaceAttrFunc,
 		})
 	}
 	logger := slog.New(h)
@@ -97,7 +118,7 @@ func setupLogs() error {
 	}
 
 	slog.SetDefault(logger.With(
-		slog.String("service", "bign-fetcher"),
+		slog.String("service.name", serviceName),
 		slog.String("host", host),
 	))
 

@@ -1,7 +1,9 @@
 package cmd
 
 import (
+	"fmt"
 	"github.com/eldius/curseforge-client-go/internal/config"
+	"github.com/spf13/viper"
 	"os"
 
 	"github.com/spf13/cobra"
@@ -13,6 +15,9 @@ var rootCmd = &cobra.Command{
 	Short: "A simple CLI to interact with CurseForge API",
 	Long:  `A simple CLI to interact with CurseForge API.`,
 	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return config.Setup(cfgFile)
+	},
+	PersistentPreRunE: func(cmd *cobra.Command, args []string) error {
 		return config.Setup(cfgFile)
 	},
 	// Uncomment the following line if your bare application
@@ -42,5 +47,9 @@ func init() {
 
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.
-	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	rootCmd.PersistentFlags().Bool("debug", false, "Enable debug log")
+	if err := viper.BindPFlag(config.DebugEnabled, rootCmd.PersistentFlags().Lookup("debug")); err != nil {
+		err = fmt.Errorf("binding debug parameter: %w", err)
+		panic(err)
+	}
 }

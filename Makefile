@@ -27,5 +27,5 @@ endif
 	git tag "v$(next_version)"
 	git push origin "v$(next_version)"
 
-search:
-	go run ./cmd/cli/ search
+search-create:
+	go run ./cmd/cli mod search --term create --game-id 432 --debug
