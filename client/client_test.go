@@ -41,7 +41,7 @@ func TestGetMods(t *testing.T) {
 
 	c := NewClient("ABC123")
 
-	res, err := c.GetMods("123")
+	res, err := c.GetMods(ModFilter{GameID: "123"})
 	if err != nil {
 		t.Log("Failed to list games")
 		t.FailNow()

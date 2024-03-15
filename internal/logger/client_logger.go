@@ -14,7 +14,7 @@ type SlogClientLogger struct {
 }
 
 func (l SlogClientLogger) Printf(format string, args ...any) {
-	slog.Debug(fmt.Sprintf(format, args))
+	slog.Debug(fmt.Sprintf(format, args...))
 }
 
 func (l SlogClientLogger) Println(v ...any) {

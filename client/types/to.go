@@ -1,6 +1,7 @@
 package types
 
 import (
+	"fmt"
 	"strings"
 	"time"
 )
@@ -225,4 +226,16 @@ func (m *ModData) GetLatestFileGameVersions() string {
 // SingleModResult is the result of APIs single mod data response
 type SingleModResult struct {
 	Data ModData `json:"data"`
+}
+
+// StringTemplate returns a string representation of this mod data
+func (m *ModData) String() string {
+	str := fmt.Sprintf("---\nname: %s\nversions:\n", m.Name)
+	for _, f := range m.LatestFiles {
+		for _, v := range f.GameVersions {
+			str = str + fmt.Sprintf(" - %s\n", v)
+		}
+	}
+
+	return str
 }

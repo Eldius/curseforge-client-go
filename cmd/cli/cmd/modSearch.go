@@ -20,16 +20,19 @@ var modSearchCmd = &cobra.Command{
 			client_config.EnableDebug(true),
 		))
 		c.SetLogger(logger.SlogClientLogger{})
-		mods, err := c.GetMods(searchOptions.gameID, searchOptions.searchTerm)
+		mods, err := c.GetMods(client.ModFilter{
+			GameID:      searchOptions.gameID,
+			Term:        searchOptions.searchTerm,
+			GameVersion: searchOptions.gameVersion,
+		})
 		if err != nil {
-			err = fmt.Errorf("looking for mods")
+			err = fmt.Errorf("looking for mods: %w", err)
 			panic(err)
 		}
 
 		fmt.Println("found", mods.Pagination.ResultCount, "mods for this search...")
 		for _, m := range mods.Data {
-			fmt.Println("name:   ", m.Name)
-			fmt.Println("version:", m.GetLatestFileGameVersions())
+			fmt.Println(m.String())
 		}
 	},
 }

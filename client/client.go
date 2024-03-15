@@ -1,15 +1,12 @@
 package client
 
 import (
-	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
 	"github.com/eldius/curseforge-client-go/client/config"
 	"github.com/eldius/curseforge-client-go/client/types"
-	"io"
 	"net/http"
-	"strings"
 )
 
 const (
@@ -32,15 +29,12 @@ type noopLogger struct {
 }
 
 func (l noopLogger) Printf(_ string, _ ...any) {
-	return
 }
 
 func (l noopLogger) Println(_ ...any) {
-	return
 }
 
 func (l noopLogger) DebugRequest(_ *http.Response) {
-	return
 }
 
 // Client is the curseforge client itself
@@ -92,39 +86,31 @@ func (_c *Client) GetGames() (types.GamesResponse, error) {
 }
 
 // GetMods lists mods for a game from API
-func (_c *Client) GetMods(gameID string, term string) (types.ModsResponse, error) {
+func (_c *Client) GetMods(f ModFilter) (*types.ModsResponse, error) {
 	var result types.ModsResponse
 	c := _c.cfg.NewHTTPClient()
 
 	req, err := _c.cfg.NewGetRequest(c, modSearchPath)
 	if err != nil {
 		_c.log.Printf("Failed to create request object: %s", err.Error())
-		return result, types.Wrap(err, "failed to create request object", -1)
+		return &result, types.Wrap(err, "failed to create request object", -1)
 	}
 
-	q := req.URL.Query()
-	q.Add("gameId", gameID)
-	if strings.TrimSpace(term) != "" {
-		q.Add("searchFilter", term)
-	}
-	req.URL.RawQuery = q.Encode()
-	if _c.cfg.IsDebug() {
-		_c.log.Printf("url: %s", req.URL.String())
-	}
+	req.URL.RawQuery = f.QueryString()
 	res, err := c.Do(req)
 	if err != nil {
 		_c.log.Printf("Failed to execute request: %s", err.Error())
-		return result, types.Wrap(err, "failed to execute request", -1)
+		return &result, types.Wrap(err, "failed to execute request", -1)
 	}
 
 	if err := _c.parseResponse(res, &result); err != nil {
 		err = fmt.Errorf("parsing API response")
-		return result, err
+		return &result, err
 	}
 
 	_c.log.Println("code:", res.StatusCode)
 
-	return result, nil
+	return &result, nil
 }
 
 // GetModsByCategory lists mods for a category from API
@@ -259,31 +245,6 @@ func (_c *Client) GetFileDownloadURI(modID string, fileID string) (*types.GetFil
 	}
 
 	return result, nil
-}
-
-func (_c *Client) debugResponse(r *http.Response) {
-	if _c.cfg.IsDebug() {
-		reader := r.Body
-		defer func() {
-			err := reader.Close()
-			if err != nil {
-				_c.log.Println("Failed to close reader:", err.Error())
-			}
-		}()
-		b, err := io.ReadAll(reader)
-		if err != nil {
-			_c.log.Printf("Failed to execute request: %s", err.Error())
-			return
-		}
-		msg := "---\nheaders:\n"
-		for k, v := range r.Header {
-			msg += fmt.Sprintf(" - %s: [%s]\n", k, strings.Join(v, ", "))
-		}
-		msg += fmt.Sprintf("response:\n%s\n---", string(b))
-		_c.log.Println(msg)
-		_c.log.Println()
-		r.Body = io.NopCloser(bytes.NewReader(b))
-	}
 }
 
 func (_c *Client) parseResponse(res *http.Response, result interface{}) error {
