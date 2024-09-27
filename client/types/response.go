@@ -8,6 +8,6 @@ type RawResponse struct {
 	RawBody string `json:"body"`
 }
 
-func (r RawResponse) SetResponse(resp string) {
+func (r *RawResponse) SetResponse(resp string) {
 	r.RawBody = resp
 }

@@ -2,6 +2,7 @@ package client
 
 import (
 	"github.com/eldius/curseforge-client-go/client/config"
+	"github.com/stretchr/testify/assert"
 	"testing"
 
 	"github.com/h2non/gock"
@@ -18,15 +19,9 @@ func TestGameList(t *testing.T) {
 	c := NewClient("ABC123")
 
 	res, err := c.GetGames()
-	if err != nil {
-		t.Log("Failed to list games")
-		t.FailNow()
-	}
+	assert.Nil(t, err)
 
-	if len(res.Data) != 4 {
-		t.Logf("Should return 4 games, but returned %d", len(res.Data))
-		t.FailNow()
-	}
+	assert.Len(t, res.Data, 4)
 	t.Log(res.Data)
 }
 
@@ -42,17 +37,12 @@ func TestGetMods(t *testing.T) {
 	c := NewClient("ABC123")
 
 	res, err := c.GetMods(ModFilter{GameID: "123"})
-	if err != nil {
-		t.Log("Failed to list games")
-		t.FailNow()
-	}
+	assert.Nil(t, err)
 
-	if len(res.Data) != 4 {
-		t.Logf("Should return 4 games, but returned %d", len(res.Data))
-		t.FailNow()
-	}
+	assert.Len(t, res.Data, 4)
+	assert.NotEmpty(t, res.RawBody)
 	t.Log(res.Data)
-
+	t.Log(res.RawBody)
 }
 
 func TestGetModsByCategory(t *testing.T) {
@@ -69,15 +59,12 @@ func TestGetModsByCategory(t *testing.T) {
 	c := NewClient("ABC123")
 
 	res, err := c.GetModsByCategory("123", "modpacks", "atm")
-	if err != nil {
-		t.Log("Failed to list games")
-		t.FailNow()
-	}
+	assert.Nil(t, err)
 
-	if len(res.Data) != 4 {
-		t.Logf("Should return 4 games, but returned %d", len(res.Data))
-		t.FailNow()
-	}
+	assert.Len(t, res.Data, 4)
+	assert.NotEmpty(t, res.RawBody)
+
 	t.Log(res.Data)
+	t.Log(res.RawBody)
 
 }
