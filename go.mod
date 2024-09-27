@@ -1,17 +1,17 @@
 module github.com/eldius/curseforge-client-go
 
-go 1.22.1
+go 1.23.1
 
 require (
 	github.com/glebarez/go-sqlite v1.22.0
 	github.com/h2non/gock v1.2.0
-	github.com/jmoiron/sqlx v1.3.5
+	github.com/jmoiron/sqlx v1.4.0
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/pkg/errors v0.9.1
-	github.com/rubenv/sql-migrate v1.6.1
-	github.com/spf13/cobra v1.8.0
-	github.com/spf13/viper v1.18.2
-	github.com/stretchr/testify v1.8.4
+	github.com/rubenv/sql-migrate v1.7.0
+	github.com/spf13/cobra v1.8.1
+	github.com/spf13/viper v1.19.0
+	github.com/stretchr/testify v1.9.0
 )
 
 require (
@@ -19,14 +19,14 @@ require (
 	github.com/dustin/go-humanize v1.0.1 // indirect
 	github.com/fsnotify/fsnotify v1.7.0 // indirect
 	github.com/go-gorp/gorp/v3 v3.1.0 // indirect
-	github.com/google/uuid v1.6.0 // indirect
+	github.com/google/uuid v1.5.0 // indirect
 	github.com/h2non/parth v0.0.0-20190131123155-b4df798d6542 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/magiconair/properties v1.8.7 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
-	github.com/pelletier/go-toml/v2 v2.1.0 // indirect
+	github.com/pelletier/go-toml/v2 v2.2.2 // indirect
 	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
 	github.com/remyoudompheng/bigfft v0.0.0-20230129092748-24d4a6f8daec // indirect
 	github.com/sagikazarmark/locafero v0.4.0 // indirect
@@ -39,7 +39,7 @@ require (
 	go.uber.org/atomic v1.9.0 // indirect
 	go.uber.org/multierr v1.9.0 // indirect
 	golang.org/x/exp v0.0.0-20230905200255-921286631fa9 // indirect
-	golang.org/x/sys v0.15.0 // indirect
+	golang.org/x/sys v0.18.0 // indirect
 	golang.org/x/text v0.14.0 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
