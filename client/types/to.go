@@ -8,6 +8,7 @@ import (
 
 // GamesResponse is the games search response
 type GamesResponse struct {
+	RawResponse
 	Data       []Game     `json:"data"`
 	Pagination Pagination `json:"pagination"`
 }
@@ -40,6 +41,7 @@ type Pagination struct {
 
 // ModsResponse is the mod search response representation
 type ModsResponse struct {
+	RawResponse
 	Data       []ModData  `json:"data"`
 	Pagination Pagination `json:"pagination"`
 }
@@ -178,6 +180,7 @@ type ModData struct {
 
 // GetFileDownloadURLResponse file download URL
 type GetFileDownloadURLResponse struct {
+	RawResponse
 	URL string `json:"data"`
 }
 
@@ -225,6 +228,7 @@ func (m *ModData) GetLatestFileGameVersions() string {
 
 // SingleModResult is the result of APIs single mod data response
 type SingleModResult struct {
+	RawResponse
 	Data ModData `json:"data"`
 }
 

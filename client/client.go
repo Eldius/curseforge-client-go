@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"github.com/eldius/curseforge-client-go/client/config"
 	"github.com/eldius/curseforge-client-go/client/types"
+	"io"
 	"net/http"
 )
 
@@ -77,7 +78,7 @@ func (_c *Client) GetGames() (types.GamesResponse, error) {
 		_c.log.Printf("Failed to execute request: %s", err.Error())
 		return result, types.Wrap(err, "failed to execute request", -1)
 	}
-	if err := _c.parseResponse(res, &result); err != nil {
+	if err := parseResponse(res, &result); err != nil {
 		err = fmt.Errorf("parsing API response")
 		return result, err
 	}
@@ -103,7 +104,7 @@ func (_c *Client) GetMods(f ModFilter) (*types.ModsResponse, error) {
 		return &result, types.Wrap(err, "failed to execute request", -1)
 	}
 
-	if err := _c.parseResponse(res, &result); err != nil {
+	if err := parseResponse(res, &result); err != nil {
 		err = fmt.Errorf("parsing API response")
 		return &result, err
 	}
@@ -115,13 +116,13 @@ func (_c *Client) GetMods(f ModFilter) (*types.ModsResponse, error) {
 
 // GetModsByCategory lists mods for a category from API
 func (_c *Client) GetModsByCategory(gameID string, modCategorySlug string, searchFilter string) (*types.ModsResponse, error) {
-	var result *types.ModsResponse
+	var result types.ModsResponse
 	c := _c.cfg.NewHTTPClient()
 
 	req, err := _c.cfg.NewGetRequest(c, modSearchPath)
 	if err != nil {
 		_c.log.Printf("Failed to create request object: %s", err.Error())
-		return result, types.Wrap(err, "failed to create request object", -1)
+		return nil, types.Wrap(err, "failed to create request object", -1)
 	}
 
 	q := req.URL.Query()
@@ -135,30 +136,30 @@ func (_c *Client) GetModsByCategory(gameID string, modCategorySlug string, searc
 	res, err := c.Do(req)
 	if err != nil {
 		_c.log.Printf("Failed to execute request: %s", err.Error())
-		return result, types.Wrap(err, "failed to execute request", -1)
+		return nil, types.Wrap(err, "failed to execute request", -1)
 	}
 	if res.StatusCode != http.StatusOK {
 		return nil, types.Wrap(errors.New("http response error"), "api request error", res.StatusCode)
 	}
 
-	if err := _c.parseResponse(res, &result); err != nil {
+	if err := parseResponse(res, &result); err != nil {
 		err = fmt.Errorf("parsing API response")
 		return nil, err
 	}
 
-	return result, nil
+	return &result, nil
 }
 
 // GetCategories lists all categories for a game from API
 func (_c *Client) GetCategories(gameID string) (*types.ModsResponse, error) {
-	var result *types.ModsResponse
+	var result types.ModsResponse
 
 	c := _c.cfg.NewHTTPClient()
 
 	req, err := _c.cfg.NewGetRequest(c, categoriesListPath)
 	if err != nil {
 		_c.log.Printf("Failed to create request object: %s", err.Error())
-		return result, err
+		return nil, err
 	}
 
 	q := req.URL.Query()
@@ -170,9 +171,9 @@ func (_c *Client) GetCategories(gameID string) (*types.ModsResponse, error) {
 	res, err := c.Do(req)
 	if err != nil {
 		_c.log.Printf("Failed to execute request: %s", err.Error())
-		return result, types.Wrap(err, types.ErrRequestErrorMsg, 0)
+		return nil, types.Wrap(err, types.ErrRequestErrorMsg, 0)
 	}
-	if err := _c.parseResponse(res, &result); err != nil {
+	if err := parseResponse(res, &result); err != nil {
 		err = fmt.Errorf("parsing API response")
 		return nil, err
 	}
@@ -181,18 +182,18 @@ func (_c *Client) GetCategories(gameID string) (*types.ModsResponse, error) {
 		return nil, errors.New("http response error: " + res.Status)
 	}
 
-	return result, nil
+	return &result, nil
 }
 
 // GetModByID gets mod info by ID from API
 func (_c *Client) GetModByID(modID string) (*types.SingleModResult, error) {
-	var result *types.SingleModResult
+	var result types.SingleModResult
 	c := _c.cfg.NewHTTPClient()
 
 	req, err := _c.cfg.NewGetRequest(c, fmt.Sprintf(modGetPath, modID))
 	if err != nil {
 		_c.log.Printf("Failed to create request object: %s", err.Error())
-		return result, err
+		return nil, err
 	}
 
 	if _c.cfg.IsDebug() {
@@ -201,30 +202,30 @@ func (_c *Client) GetModByID(modID string) (*types.SingleModResult, error) {
 	res, err := c.Do(req)
 	if err != nil {
 		_c.log.Printf("Failed to execute request: %s", err.Error())
-		return result, err
+		return nil, err
 	}
 	if res.StatusCode != http.StatusOK {
 		return nil, errors.New("http response error: " + res.Status)
 	}
 
-	if err := _c.parseResponse(res, &result); err != nil {
+	if err := parseResponse(res, &result); err != nil {
 		err = fmt.Errorf("parsing API response")
 		return nil, err
 	}
 
-	return result, nil
+	return &result, nil
 }
 
 // GetFileDownloadURI gets mod info by ID from API
 func (_c *Client) GetFileDownloadURI(modID string, fileID string) (*types.GetFileDownloadURLResponse, error) {
-	var result *types.GetFileDownloadURLResponse
+	var result types.GetFileDownloadURLResponse
 	c := _c.cfg.NewHTTPClient()
 
 	// /v1/mods/{modId}/files/{fileId}
 	req, err := _c.cfg.NewGetRequest(c, fmt.Sprintf(fileGetPath, modID, fileID))
 	if err != nil {
 		_c.log.Printf("Failed to create request object: %s", err.Error())
-		return result, err
+		return nil, err
 	}
 
 	if _c.cfg.IsDebug() {
@@ -233,27 +234,34 @@ func (_c *Client) GetFileDownloadURI(modID string, fileID string) (*types.GetFil
 	res, err := c.Do(req)
 	if err != nil {
 		_c.log.Printf("Failed to execute request: %s", err.Error())
-		return result, err
+		return nil, err
 	}
 	if res.StatusCode != http.StatusOK {
 		return nil, errors.New("http response error: " + res.Status)
 	}
 
-	if err := _c.parseResponse(res, &result); err != nil {
+	if err := parseResponse(res, &result); err != nil {
 		err = fmt.Errorf("parsing API response")
 		return nil, err
 	}
 
-	return result, nil
+	return &result, nil
 }
 
-func (_c *Client) parseResponse(res *http.Response, result interface{}) error {
-	if _c.cfg.IsDebug() {
-		_c.log.DebugRequest(res)
-	}
-
+func parseResponse(res *http.Response, result types.CurseforgeAPIResponse) error {
 	defer func() {
 		_ = res.Body.Close()
 	}()
-	return json.NewDecoder(res.Body).Decode(result)
+	b, err := io.ReadAll(res.Body)
+	if err != nil {
+		return fmt.Errorf("read response body: %w", err)
+	}
+
+	if err := json.Unmarshal(b, result); err != nil {
+		return fmt.Errorf("parsing api response: %w", err)
+	}
+
+	result.SetResponse(string(b))
+
+	return nil
 }
