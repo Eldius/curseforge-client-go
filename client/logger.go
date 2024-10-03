@@ -1,27 +1,31 @@
-package logger
+package client
 
 import (
 	"bytes"
 	"fmt"
-	"github.com/eldius/curseforge-client-go/client"
 	"io"
 	"log/slog"
 	"net/http"
 )
 
-type SlogClientLogger struct {
-	client.Logger
+type DefaultSlogClientLogger struct {
+	Logger
+	l *slog.Logger
 }
 
-func (l SlogClientLogger) Printf(format string, args ...any) {
+func NewDefaultSlogClientLogger(logger *slog.Logger) Logger {
+	return &DefaultSlogClientLogger{l: logger}
+}
+
+func (l DefaultSlogClientLogger) Printf(format string, args ...any) {
 	slog.Debug(fmt.Sprintf(format, args...))
 }
 
-func (l SlogClientLogger) Println(v ...any) {
+func (l DefaultSlogClientLogger) Println(v ...any) {
 	slog.Debug(fmt.Sprintf("%v", v))
 }
 
-func (l SlogClientLogger) DebugRequest(res *http.Response) {
+func (l DefaultSlogClientLogger) DebugRequest(res *http.Response) {
 	buff, _ := io.ReadAll(res.Body)
 	res.Body = io.NopCloser(bytes.NewReader(buff))
 	slog.With(

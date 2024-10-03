@@ -6,7 +6,6 @@ import (
 	"github.com/eldius/curseforge-client-go/client"
 	client_config "github.com/eldius/curseforge-client-go/client/config"
 	"github.com/eldius/curseforge-client-go/internal/config"
-	"github.com/eldius/curseforge-client-go/internal/logger"
 	"github.com/eldius/curseforge-client-go/internal/model"
 	"github.com/eldius/curseforge-client-go/internal/persistence"
 	"github.com/spf13/cobra"
@@ -23,7 +22,7 @@ var modSearchCmd = &cobra.Command{
 			config.GetCurseforgeAPIKey(),
 			client_config.EnableDebug(true),
 		))
-		c.SetLogger(logger.SlogClientLogger{})
+		c.SetLogger(client.NewDefaultSlogClientLogger(slog.Default()))
 
 		index := int64(0)
 
