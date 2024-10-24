@@ -10,7 +10,7 @@ func TestModFilter(t *testing.T) {
 		f := ModFilter{}
 
 		q := f.QueryString()
-		assert.Equal(t, "index=0", q)
+		assert.Equal(t, "index=0&modLoaderType=0", q)
 	})
 
 	t.Run("given a mod filter with game id should return a query string with only game id parameter", func(t *testing.T) {

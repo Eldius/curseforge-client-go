@@ -2,4 +2,4 @@
 
 ## references ##
 
-- [Curseforge - API docs](https://docs.curseforge.com/#setting-up-a-game-step-by-step-guide)
+- [Curseforge - API docs](https://docs.curseforge.com/rest-api/#base-url)
