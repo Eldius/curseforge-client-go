@@ -6,6 +6,33 @@ import (
 	"time"
 )
 
+const (
+	ModLoaderTypeAny        ModLoaderType = 0
+	ModLoaderTypeForge      ModLoaderType = 1
+	ModLoaderTypeCauldron   ModLoaderType = 2
+	ModLoaderTypeLiteLoader ModLoaderType = 3
+	ModLoaderTypeFabric     ModLoaderType = 4
+	ModLoaderTypeQuilt      ModLoaderType = 5
+	ModLoaderTypeNeoForge   ModLoaderType = 6
+)
+
+const (
+	ModStatusNew             ModStatus = 1
+	ModStatusChangesRequired ModStatus = 2
+	ModStatusUnderSoftReview ModStatus = 3
+	ModStatusApproved        ModStatus = 4
+	ModStatusRejected        ModStatus = 5
+	ModStatusChangesMade     ModStatus = 6
+	ModStatusInactive        ModStatus = 7
+	ModStatusAbandoned       ModStatus = 8
+	ModStatusDeleted         ModStatus = 9
+	ModStatusUnderReview     ModStatus = 10
+)
+
+type ModLoaderType int
+
+type ModStatus int
+
 // GamesResponse is the games search response
 type GamesResponse struct {
 	RawResponse
@@ -143,12 +170,12 @@ type File struct {
 
 // FileIndexes represents file indexes
 type FileIndexes struct {
-	GameVersion       string `json:"gameVersion"`
-	FileID            int    `json:"fileId"`
-	Filename          string `json:"filename"`
-	ReleaseType       int    `json:"releaseType"`
-	GameVersionTypeID int    `json:"gameVersionTypeId"`
-	ModLoader         int    `json:"modLoader"`
+	GameVersion       string        `json:"gameVersion"`
+	FileID            int           `json:"fileId"`
+	Filename          string        `json:"filename"`
+	ReleaseType       int           `json:"releaseType"`
+	GameVersionTypeID int           `json:"gameVersionTypeId"`
+	ModLoader         ModLoaderType `json:"modLoader"`
 }
 
 // ModData is a mod info representation
@@ -159,7 +186,7 @@ type ModData struct {
 	Slug                 string        `json:"slug"`
 	Links                Links         `json:"links"`
 	Summary              string        `json:"summary"`
-	Status               int           `json:"status"`
+	Status               ModStatus     `json:"status"`
 	DownloadCount        float64       `json:"downloadCount"`
 	IsFeatured           bool          `json:"isFeatured"`
 	PrimaryCategoryID    int           `json:"primaryCategoryId"`
@@ -197,7 +224,7 @@ func (g *Game) TranslateStatus() string {
 
 // TranslateStatus translates file status to text
 func (m *ModData) TranslateStatus() string {
-	return translateStatus(m.Status, ModStatusMap)
+	return translateStatus(int(m.Status), ModStatusMap)
 }
 
 func translateStatus(s int, m map[int]string) string {
