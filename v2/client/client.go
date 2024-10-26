@@ -20,6 +20,7 @@ type CurseClient interface {
 	GetGameVersions(gameID string) (versions *types.GameVersionsResponse, err error)
 	GetMinecraftVersions(...MinecraftVersionsQueryOption) (versions *types.MinecraftVersionsResponse, err error)
 	GetMinecraftModLoaders(...MinecraftModLoadersQueryOption) (versions *types.MinecraftModLoadersResponse, err error)
+	GetMods(opts ...ModsQueryOption) (*types.ModsResponse, error)
 }
 
 type CurseOptions struct {
@@ -171,9 +172,7 @@ func (c *curseClient) GetMinecraftModLoaders(opts ...MinecraftModLoadersQueryOpt
 
 // GetMods lists mods for a game from API
 func (c *curseClient) GetMods(opts ...ModsQueryOption) (*types.ModsResponse, error) {
-	q := ApiQueryParams{
-		"gameId":
-	}
+	q := ApiQueryParams{}
 	for _, o := range opts {
 		o(q)
 	}
