@@ -38,7 +38,7 @@ type GameVersionsResponse struct {
 type GameVersions []GameVersion
 
 type GameVersion struct {
-	Id   int    `json:"id"`
+	ID   int64  `json:"id"`
 	Slug string `json:"slug"`
 	Name string `json:"name"`
 }
@@ -52,16 +52,16 @@ type MinecraftVersionsResponse struct {
 type MinecraftVersions []MinecraftVersion
 
 type MinecraftVersion struct {
-	Id                    int       `json:"id"`
-	GameVersionId         int       `json:"gameVersionId"`
+	ID                    int64     `json:"id"`
+	GameVersionID         int64     `json:"gameVersionId"`
 	VersionString         string    `json:"versionString"`
 	JarDownloadUrl        string    `json:"jarDownloadUrl"`
 	JsonDownloadUrl       string    `json:"jsonDownloadUrl"`
 	Approved              bool      `json:"approved"`
 	DateModified          time.Time `json:"dateModified"`
-	GameVersionTypeId     int       `json:"gameVersionTypeId"`
-	GameVersionStatus     int       `json:"gameVersionStatus"`
-	GameVersionTypeStatus int       `json:"gameVersionTypeStatus"`
+	GameVersionTypeID     int64     `json:"gameVersionTypeId"`
+	GameVersionStatus     int64     `json:"gameVersionStatus"`
+	GameVersionTypeStatus int64     `json:"gameVersionTypeStatus"`
 }
 
 type MinecraftModLoadersResponse struct {
@@ -94,34 +94,35 @@ type Links struct {
 	SourceURL  string `json:"sourceUrl"`
 }
 type Categories struct {
-	ID               int       `json:"id"`
-	GameID           int       `json:"gameId"`
+	ID               int64     `json:"id"`
+	GameID           int64     `json:"gameId"`
 	Name             string    `json:"name"`
 	Slug             string    `json:"slug"`
 	URL              string    `json:"url"`
 	IconURL          string    `json:"iconUrl"`
 	DateModified     time.Time `json:"dateModified"`
 	IsClass          bool      `json:"isClass"`
-	ClassID          int       `json:"classId"`
-	ParentCategoryID int       `json:"parentCategoryId"`
-	DisplayIndex     int       `json:"displayIndex"`
+	ClassID          int64     `json:"classId"`
+	ParentCategoryID int64     `json:"parentCategoryId"`
+	DisplayIndex     int64     `json:"displayIndex"`
 }
+
 type Authors struct {
-	ID   int    `json:"id"`
+	ID   int64  `json:"id"`
 	Name string `json:"name"`
 	URL  string `json:"url"`
 }
 type Logo struct {
-	ID           int    `json:"id"`
-	ModID        int    `json:"modId"`
+	ID           int64  `json:"id"`
+	ModID        int64  `json:"modId"`
 	Title        string `json:"title"`
 	Description  string `json:"description"`
 	ThumbnailURL string `json:"thumbnailUrl"`
 	URL          string `json:"url"`
 }
 type Screenshots struct {
-	ID           int    `json:"id"`
-	ModID        int    `json:"modId"`
+	ID           int64  `json:"id"`
+	ModID        int64  `json:"modId"`
 	Title        string `json:"title"`
 	Description  string `json:"description"`
 	ThumbnailURL string `json:"thumbnailUrl"`
@@ -131,25 +132,26 @@ type Hashes struct {
 	Value string `json:"value"`
 	Algo  int    `json:"algo"`
 }
+
 type SortableGameVersions struct {
 	GameVersionName        string    `json:"gameVersionName"`
 	GameVersionPadded      string    `json:"gameVersionPadded"`
 	GameVersion            string    `json:"gameVersion"`
 	GameVersionReleaseDate time.Time `json:"gameVersionReleaseDate"`
-	GameVersionTypeID      int       `json:"gameVersionTypeId"`
+	GameVersionTypeID      int64     `json:"gameVersionTypeId"`
 }
 type Dependencies struct {
-	ModID        int `json:"modId"`
-	RelationType int `json:"relationType"`
+	ModID        int64 `json:"modId"`
+	RelationType int   `json:"relationType"`
 }
 type Modules struct {
 	Name        string `json:"name"`
-	Fingerprint int    `json:"fingerprint"`
+	Fingerprint string `json:"fingerprint"`
 }
 type LatestFiles struct {
-	ID                   int                    `json:"id"`
-	GameID               int                    `json:"gameId"`
-	ModID                int                    `json:"modId"`
+	ID                   int64                  `json:"id"`
+	GameID               int64                  `json:"gameId"`
+	ModID                int64                  `json:"modId"`
 	IsAvailable          bool                   `json:"isAvailable"`
 	DisplayName          string                 `json:"displayName"`
 	FileName             string                 `json:"fileName"`
@@ -157,26 +159,26 @@ type LatestFiles struct {
 	FileStatus           int                    `json:"fileStatus"`
 	Hashes               []Hashes               `json:"hashes"`
 	FileDate             time.Time              `json:"fileDate"`
-	FileLength           int                    `json:"fileLength"`
-	DownloadCount        int                    `json:"downloadCount"`
-	FileSizeOnDisk       int                    `json:"fileSizeOnDisk"`
+	FileLength           int64                  `json:"fileLength"`
+	DownloadCount        int64                  `json:"downloadCount"`
+	FileSizeOnDisk       int64                  `json:"fileSizeOnDisk"`
 	DownloadURL          string                 `json:"downloadUrl"`
 	GameVersions         []string               `json:"gameVersions"`
 	SortableGameVersions []SortableGameVersions `json:"sortableGameVersions"`
 	Dependencies         []Dependencies         `json:"dependencies"`
 	ExposeAsAlternative  bool                   `json:"exposeAsAlternative"`
-	ParentProjectFileID  int                    `json:"parentProjectFileId"`
-	AlternateFileID      int                    `json:"alternateFileId"`
+	ParentProjectFileID  int64                  `json:"parentProjectFileId"`
+	AlternateFileID      int64                  `json:"alternateFileId"`
 	IsServerPack         bool                   `json:"isServerPack"`
-	ServerPackFileID     int                    `json:"serverPackFileId"`
+	ServerPackFileID     int64                  `json:"serverPackFileId"`
 	IsEarlyAccessContent bool                   `json:"isEarlyAccessContent"`
 	EarlyAccessEndDate   time.Time              `json:"earlyAccessEndDate"`
-	FileFingerprint      int                    `json:"fileFingerprint"`
+	FileFingerprint      string                 `json:"fileFingerprint"`
 	Modules              []Modules              `json:"modules"`
 }
 type LatestFilesIndexes struct {
 	GameVersion       string        `json:"gameVersion"`
-	FileID            int           `json:"fileId"`
+	FileID            int64         `json:"fileId"`
 	Filename          string        `json:"filename"`
 	ReleaseType       int           `json:"releaseType"`
 	GameVersionTypeID int           `json:"gameVersionTypeId"`
@@ -185,7 +187,7 @@ type LatestFilesIndexes struct {
 
 type LatestEarlyAccessFilesIndexes struct {
 	GameVersion       string `json:"gameVersion"`
-	FileID            int    `json:"fileId"`
+	FileID            int64  `json:"fileId"`
 	Filename          string `json:"filename"`
 	ReleaseType       int    `json:"releaseType"`
 	GameVersionTypeID int    `json:"gameVersionTypeId"`
@@ -216,14 +218,14 @@ type ModData struct {
 	DateModified                  time.Time                       `json:"dateModified"`
 	DateReleased                  time.Time                       `json:"dateReleased"`
 	AllowModDistribution          bool                            `json:"allowModDistribution"`
-	GamePopularityRank            int                             `json:"gamePopularityRank"`
+	GamePopularityRank            int64                           `json:"gamePopularityRank"`
 	IsAvailable                   bool                            `json:"isAvailable"`
-	ThumbsUpCount                 int                             `json:"thumbsUpCount"`
-	Rating                        int                             `json:"rating"`
+	ThumbsUpCount                 int64                           `json:"thumbsUpCount"`
+	Rating                        int64                           `json:"rating"`
 }
 type Pagination struct {
-	Index       int `json:"index"`
-	PageSize    int `json:"pageSize"`
-	ResultCount int `json:"resultCount"`
-	TotalCount  int `json:"totalCount"`
+	Index       int64 `json:"index"`
+	PageSize    int64 `json:"pageSize"`
+	ResultCount int64 `json:"resultCount"`
+	TotalCount  int64 `json:"totalCount"`
 }
