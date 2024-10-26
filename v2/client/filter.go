@@ -66,6 +66,13 @@ func WithModsGameVersion(gv string) ModsQueryOption {
 	})
 }
 
+// WithModsGameID defines game ID to be used
+func WithModsGameID(id string) ModsQueryOption {
+	return ModsQueryOption(func(m ApiQueryParams) {
+		m["gameId"] = id
+	})
+}
+
 // WithModsClassID defines mod class ID
 func WithModsClassID(cid string) ModsQueryOption {
 	return ModsQueryOption(func(m ApiQueryParams) {
