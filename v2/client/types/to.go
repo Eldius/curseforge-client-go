@@ -1,6 +1,7 @@
 package types
 
 import (
+	"sort"
 	"strings"
 	"time"
 )
@@ -43,6 +44,13 @@ type GameVersionsResponse struct {
 
 type GameVersions []GameVersion
 
+func (v GameVersions) Sort() GameVersions {
+	sort.Slice(v, func(i, j int) bool {
+		return v[i].Name < v[j].Name
+	})
+	return v
+}
+
 type GameVersion struct {
 	ID   int64  `json:"id"`
 	Slug string `json:"slug"`
@@ -55,6 +63,13 @@ type MinecraftVersionsResponse struct {
 }
 
 type MinecraftVersions []MinecraftVersion
+
+func (v MinecraftVersions) Sort() MinecraftVersions {
+	sort.Slice(v, func(i, j int) bool {
+		return v[i].DateModified.After(v[j].DateModified)
+	})
+	return v
+}
 
 type MinecraftVersion struct {
 	ID                    int64     `json:"id"`
@@ -75,6 +90,13 @@ type MinecraftModLoadersResponse struct {
 }
 
 type MinecraftModLoaders []MinecraftModLoader
+
+func (v MinecraftModLoaders) Sort() MinecraftModLoaders {
+	sort.Slice(v, func(i, j int) bool {
+		return v[i].DateModified.After(v[j].DateModified)
+	})
+	return v
+}
 
 type MinecraftModLoader struct {
 	Name         string    `json:"name"`
