@@ -36,6 +36,50 @@ func WithIncludeAll(b bool) MinecraftModLoadersQueryOption {
 	})
 }
 
+type ModsQueryOption ApiQueryOption
+
+// WithGameID defines game ID for mod search
+func WithGameID(g string) ModsQueryOption {
+	return ModsQueryOption(func(m ApiQueryParams) {
+		m["gameId"] = g
+	})
+}
+
+// WithModsSeatchFilter defines query filter search
+func WithModsSeatchFilter(q string) ModsQueryOption {
+	return ModsQueryOption(func(m ApiQueryParams) {
+		m["searchFilter"] = q
+	})
+}
+
+// WithModsModLoaderType defines mod loader to be used
+func WithModsModLoaderType(mlt string) ModsQueryOption {
+	return ModsQueryOption(func(m ApiQueryParams) {
+		m["modLoaderType"] = mlt
+	})
+}
+
+// WithModsGameVersion defines game version to be used
+func WithModsGameVersion(gv string) ModsQueryOption {
+	return ModsQueryOption(func(m ApiQueryParams) {
+		m["gameVersion"] = gv
+	})
+}
+
+// WithModsClassID defines mod class ID
+func WithModsClassID(cid string) ModsQueryOption {
+	return ModsQueryOption(func(m ApiQueryParams) {
+		m["classId"] = cid
+	})
+}
+
+// WithModsCategoryID defines a category ID
+func WithModsCategoryID(cid string) ModsQueryOption {
+	return ModsQueryOption(func(m ApiQueryParams) {
+		m["categoryId"] = cid
+	})
+}
+
 func (f ApiQueryParams) QueryString() string {
 	v, _ := url.ParseQuery("")
 	for key, value := range f {

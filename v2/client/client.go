@@ -13,6 +13,7 @@ const (
 	getGameVersionsPath    = "/v2/games/%s/versions?sortDescending=true"
 	getMinecraftVersions   = "/v1/minecraft/version"
 	getMinecraftModLoaders = "/v1/minecraft/modloader"
+	minecraftModSearchPath = "/v1/mods/search"
 )
 
 type CurseClient interface {
@@ -52,7 +53,7 @@ func NewCurseClient(apiKey string, opts ...config.CfgFunc) CurseClient {
 	opt := config.NewConfig(apiKey, opts...)
 	return &curseClient{
 		opt: *opt,
-		c:   &http.Client{},
+		c:   opt.NewHTTPClient(),
 	}
 }
 
@@ -160,6 +161,52 @@ func (c *curseClient) GetMinecraftModLoaders(opts ...MinecraftModLoadersQueryOpt
 		return nil, fmt.Errorf("reading get minecraft mod loaders response: %w", err)
 	}
 	var mv types.MinecraftModLoadersResponse
+	if err := json.Unmarshal(b, &mv); err != nil {
+		return nil, fmt.Errorf("decoding get minecraft mod loaders response: %w", err)
+	}
+	mv.RawBody = string(b)
+
+	return &mv, nil
+}
+
+// GetMods lists mods for a game from API
+func (c *curseClient) GetMods(opts ...ModsQueryOption) (*types.ModsResponse, error) {
+	q := ApiQueryParams{
+		"gameId":
+	}
+	for _, o := range opts {
+		o(q)
+	}
+	var result types.ModsResponse
+	req, err := c.opt.NewGetRequest(c.buildRequestPath(minecraftModSearchPath, q))
+	if err != nil {
+		err = fmt.Errorf("creating get minecraft mods request: %w", err)
+		return &result, types.Wrap(err, "failed to create request object", -1)
+	}
+
+	res, err := c.c.Do(req)
+	if err != nil {
+		err = fmt.Errorf("executing get minecraft mods request: %w", err)
+		return &result, types.Wrap(err, "failed to execute request", -1)
+	}
+	defer func() {
+		_ = res.Body.Close()
+	}()
+	if res.StatusCode/100 != 2 {
+		b, _ := io.ReadAll(res.Body)
+		return nil, types.Wrap(
+			fmt.Errorf("get mods request failed with status code %d", res.StatusCode),
+			string(b),
+			res.StatusCode,
+		)
+	}
+
+	b, err := io.ReadAll(res.Body)
+	if err != nil {
+		err = fmt.Errorf("reading get minecraft mods response: %w", err)
+		return &result, types.Wrap(err, "failed to read request", -1)
+	}
+	var mv types.ModsResponse
 	if err := json.Unmarshal(b, &mv); err != nil {
 		return nil, fmt.Errorf("decoding get minecraft mod loaders response: %w", err)
 	}
