@@ -195,7 +195,7 @@ type LatestEarlyAccessFilesIndexes struct {
 }
 
 type ModData struct {
-	ID                            int                             `json:"id"`
+	ID                            int64                           `json:"id"`
 	GameID                        int                             `json:"gameId"`
 	Name                          string                          `json:"name"`
 	Slug                          string                          `json:"slug"`
