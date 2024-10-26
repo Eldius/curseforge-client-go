@@ -1,6 +1,9 @@
 package types
 
-import "time"
+import (
+	"strings"
+	"time"
+)
 
 const (
 	ModLoaderTypeAny        ModLoaderType = 0
@@ -148,7 +151,7 @@ type Modules struct {
 	Name        string `json:"name"`
 	Fingerprint string `json:"fingerprint"`
 }
-type LatestFiles struct {
+type File struct {
 	ID                   int64                  `json:"id"`
 	GameID               int64                  `json:"gameId"`
 	ModID                int64                  `json:"modId"`
@@ -211,7 +214,7 @@ type ModData struct {
 	Logo                          Logo                            `json:"logo"`
 	Screenshots                   []Screenshots                   `json:"screenshots"`
 	MainFileID                    int                             `json:"mainFileId"`
-	LatestFiles                   []LatestFiles                   `json:"latestFiles"`
+	LatestFiles                   []File                          `json:"latestFiles"`
 	LatestFilesIndexes            []LatestFilesIndexes            `json:"latestFilesIndexes"`
 	LatestEarlyAccessFilesIndexes []LatestEarlyAccessFilesIndexes `json:"latestEarlyAccessFilesIndexes"`
 	DateCreated                   time.Time                       `json:"dateCreated"`
@@ -228,4 +231,22 @@ type Pagination struct {
 	PageSize    int64 `json:"pageSize"`
 	ResultCount int64 `json:"resultCount"`
 	TotalCount  int64 `json:"totalCount"`
+}
+
+// GetLatestFile returns the latest mod file
+func (m *ModData) GetLatestFile() *File {
+	if len(m.LatestFiles) < 1 {
+		return nil
+	}
+	return &m.LatestFiles[0]
+}
+
+// GetLatestFileGameVersions returns the latest file version data
+func (m *ModData) GetLatestFileGameVersions() string {
+	f := m.GetLatestFile()
+	if f == nil {
+		return ""
+	}
+
+	return strings.Join(f.GameVersions, ", ")
 }
