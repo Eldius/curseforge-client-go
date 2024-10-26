@@ -9,6 +9,18 @@ type ApiQueryParams map[string]any
 
 type ApiQueryOption func(ApiQueryParams)
 
+func PageIndex(index int64) ApiQueryOption {
+	return func(q ApiQueryParams) {
+		q["index"] = fmt.Sprintf("%d", index)
+	}
+}
+
+func PageSize(size int64) ApiQueryOption {
+	return func(q ApiQueryParams) {
+		q["pageSize"] = fmt.Sprintf("%d", size)
+	}
+}
+
 // MinecraftVersionsQueryOption defines a ModLoader list query options
 type MinecraftVersionsQueryOption ApiQueryOption
 
@@ -85,6 +97,16 @@ func WithModsCategoryID(cid string) ModsQueryOption {
 	return ModsQueryOption(func(m ApiQueryParams) {
 		m["categoryId"] = cid
 	})
+}
+
+// WithModsPageSize defines result page size
+func WithModsPageSize(pageSize int64) ModsQueryOption {
+	return ModsQueryOption(PageSize(pageSize))
+}
+
+// WithModsIndex defines result start index
+func WithModsIndex(index int64) ModsQueryOption {
+	return ModsQueryOption(PageIndex(index))
 }
 
 func (f ApiQueryParams) QueryString() string {
