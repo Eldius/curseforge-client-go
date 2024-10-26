@@ -3,9 +3,9 @@ package client
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/eldius/curseforge-client-go/v2/client/config"
 	"github.com/eldius/curseforge-client-go/v2/client/types"
 	"io"
+	"log"
 	"net/http"
 )
 
@@ -23,35 +23,15 @@ type CurseClient interface {
 	GetMods(opts ...ModsQueryOption) (*types.ModsResponse, error)
 }
 
-type CurseOptions struct {
-	apiKey   string
-	endpoint string
-}
-
-type CurseOption func(*CurseOptions)
-
 type curseClient struct {
 	CurseClient
-	opt config.Config
+	opt Config
 	c   *http.Client
 }
 
-// WithCurseApiKey sets up Curseforge API key
-func WithCurseApiKey(apiKey string) CurseOption {
-	return func(o *CurseOptions) {
-		o.apiKey = apiKey
-	}
-}
-
-func WithCustomEndpoint(endpoint string) CurseOption {
-	return func(o *CurseOptions) {
-		o.endpoint = endpoint
-	}
-}
-
 // NewCurseClient creates a new Curseforge client
-func NewCurseClient(apiKey string, opts ...config.CfgFunc) CurseClient {
-	opt := config.NewConfig(apiKey, opts...)
+func NewCurseClient(apiKey string, opts ...CfgFunc) CurseClient {
+	opt := NewConfig(apiKey, opts...)
 	return &curseClient{
 		opt: *opt,
 		c:   opt.NewHTTPClient(),
@@ -59,7 +39,12 @@ func NewCurseClient(apiKey string, opts ...config.CfgFunc) CurseClient {
 }
 
 func (c *curseClient) GetGameVersions(gameID string) (versions *types.GameVersionsResponse, err error) {
-	req, err := c.opt.NewGetRequest(c.buildRequestPath(fmt.Sprintf(getGameVersionsPath, gameID), ApiQueryParams{}))
+	log := c.opt.log
+	url := c.buildRequestPath(fmt.Sprintf(getGameVersionsPath, gameID), ApiQueryParams{})
+	if c.opt.debug {
+		log.Printf("GetGameVersions.Begin id: %s (url: %s)", gameID, url)
+	}
+	req, err := c.opt.NewGetRequest(url)
 	if err != nil {
 		return nil, fmt.Errorf("creating get game versions request: %w", err)
 	}
@@ -71,23 +56,10 @@ func (c *curseClient) GetGameVersions(gameID string) (versions *types.GameVersio
 	defer func() {
 		_ = res.Body.Close()
 	}()
-	if res.StatusCode/100 != 2 {
-		b, _ := io.ReadAll(res.Body)
-		return nil, types.Wrap(
-			fmt.Errorf("get game versions request failed with status code %d", res.StatusCode),
-			string(b),
-			res.StatusCode,
-		)
-	}
 	var gv types.GameVersionsResponse
-	b, err := io.ReadAll(res.Body)
-	if err != nil {
-		return nil, fmt.Errorf("reading get game versions response: %w", err)
+	if err := parseResponse(res, "get game versions", c.opt.debug, &gv); err != nil {
+		return nil, err
 	}
-	if err := json.Unmarshal(b, &gv); err != nil {
-		return nil, fmt.Errorf("decoding get game versions response: %w", err)
-	}
-	gv.RawBody = string(b)
 	return &gv, nil
 }
 
@@ -108,24 +80,10 @@ func (c *curseClient) GetMinecraftVersions(opts ...MinecraftVersionsQueryOption)
 	defer func() {
 		_ = res.Body.Close()
 	}()
-	if res.StatusCode/100 != 2 {
-		b, _ := io.ReadAll(res.Body)
-		return nil, types.Wrap(
-			fmt.Errorf("get game versions request failed with status code %d", res.StatusCode),
-			string(b),
-			res.StatusCode,
-		)
-	}
-
-	b, err := io.ReadAll(res.Body)
-	if err != nil {
-		return nil, fmt.Errorf("reading get minecraft versions response: %w", err)
-	}
 	var mv types.MinecraftVersionsResponse
-	if err := json.Unmarshal(b, &mv); err != nil {
-		return nil, fmt.Errorf("decoding get minecraft versions response: %w", err)
+	if err := parseResponse(res, "get minecraft versions", c.opt.debug, &mv); err != nil {
+		return nil, err
 	}
-	mv.RawBody = string(b)
 
 	return &mv, nil
 }
@@ -148,24 +106,10 @@ func (c *curseClient) GetMinecraftModLoaders(opts ...MinecraftModLoadersQueryOpt
 	defer func() {
 		_ = res.Body.Close()
 	}()
-	if res.StatusCode/100 != 2 {
-		b, _ := io.ReadAll(res.Body)
-		return nil, types.Wrap(
-			fmt.Errorf("get game versions request failed with status code %d", res.StatusCode),
-			string(b),
-			res.StatusCode,
-		)
-	}
-
-	b, err := io.ReadAll(res.Body)
-	if err != nil {
-		return nil, fmt.Errorf("reading get minecraft mod loaders response: %w", err)
-	}
 	var mv types.MinecraftModLoadersResponse
-	if err := json.Unmarshal(b, &mv); err != nil {
-		return nil, fmt.Errorf("decoding get minecraft mod loaders response: %w", err)
+	if err := parseResponse(res, "get minecraft mod loaders", c.opt.debug, &mv); err != nil {
+		return nil, err
 	}
-	mv.RawBody = string(b)
 
 	return &mv, nil
 }
@@ -191,29 +135,42 @@ func (c *curseClient) GetMods(opts ...ModsQueryOption) (*types.ModsResponse, err
 	defer func() {
 		_ = res.Body.Close()
 	}()
-	if res.StatusCode/100 != 2 {
-		b, _ := io.ReadAll(res.Body)
-		return nil, types.Wrap(
-			fmt.Errorf("get mods request failed with status code %d", res.StatusCode),
-			string(b),
-			res.StatusCode,
-		)
-	}
 
-	b, err := io.ReadAll(res.Body)
-	if err != nil {
-		err = fmt.Errorf("reading get minecraft mods response: %w", err)
-		return &result, types.Wrap(err, "failed to read request", -1)
-	}
 	var mv types.ModsResponse
-	if err := json.Unmarshal(b, &mv); err != nil {
-		return nil, fmt.Errorf("decoding get minecraft mod loaders response: %w", err)
+	if err := parseResponse(res, "get game versions", c.opt.debug, &mv); err != nil {
+		return nil, fmt.Errorf("parsing get minecraft mods response: %w", err)
 	}
-	mv.RawBody = string(b)
 
 	return &mv, nil
 }
 
 func (c *curseClient) buildRequestPath(path string, q ApiQueryParams) string {
 	return fmt.Sprintf("%s?%s", path, q.QueryString())
+}
+
+func parseResponse[T types.CurseforgeAPIResponse](res *http.Response, step string, debug bool, out T) error {
+	if res.StatusCode/100 != 2 {
+		b, _ := io.ReadAll(res.Body)
+		return types.Wrap(
+			fmt.Errorf("%s request failed with status code %d", step, res.StatusCode),
+			string(b),
+			res.StatusCode,
+		)
+	}
+	b, err := io.ReadAll(res.Body)
+	if err != nil {
+		return fmt.Errorf("reading get game versions response: %w", err)
+	}
+
+	bodyAsString := string(b)
+	if debug {
+		log.Printf("%s.Response (url: %s): %s", step, res.Request.URL.String(), bodyAsString)
+	}
+
+	if err := json.Unmarshal(b, out); err != nil {
+		return fmt.Errorf("decoding get game versions response: %w", err)
+	}
+	out.SetRawResponseBody(bodyAsString)
+
+	return nil
 }

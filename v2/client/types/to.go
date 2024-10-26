@@ -30,10 +30,13 @@ const (
 
 type ModLoaderType int
 
+func (t ModLoaderType) Value() int {
+	return int(t)
+}
+
 type ModStatus int
 
 type GameVersionsResponse struct {
-	CurseforgeAPIResponse
 	RawResponse
 	Data GameVersions `json:"data"`
 }
@@ -47,7 +50,6 @@ type GameVersion struct {
 }
 
 type MinecraftVersionsResponse struct {
-	CurseforgeAPIResponse
 	RawResponse
 	Data MinecraftVersions `json:"data"`
 }
@@ -68,7 +70,6 @@ type MinecraftVersion struct {
 }
 
 type MinecraftModLoadersResponse struct {
-	CurseforgeAPIResponse
 	RawResponse
 	Data MinecraftModLoaders `json:"data"`
 }
@@ -85,17 +86,18 @@ type MinecraftModLoader struct {
 }
 
 type ModsResponse struct {
-	CurseforgeAPIResponse
 	RawResponse
 	Data       []ModData  `json:"data"`
 	Pagination Pagination `json:"pagination"`
 }
+
 type Links struct {
 	WebsiteURL string `json:"websiteUrl"`
 	WikiURL    string `json:"wikiUrl"`
 	IssuesURL  string `json:"issuesUrl"`
 	SourceURL  string `json:"sourceUrl"`
 }
+
 type Categories struct {
 	ID               int64     `json:"id"`
 	GameID           int64     `json:"gameId"`
@@ -115,6 +117,7 @@ type Authors struct {
 	Name string `json:"name"`
 	URL  string `json:"url"`
 }
+
 type Logo struct {
 	ID           int64  `json:"id"`
 	ModID        int64  `json:"modId"`
@@ -123,6 +126,7 @@ type Logo struct {
 	ThumbnailURL string `json:"thumbnailUrl"`
 	URL          string `json:"url"`
 }
+
 type Screenshots struct {
 	ID           int64  `json:"id"`
 	ModID        int64  `json:"modId"`
@@ -131,6 +135,7 @@ type Screenshots struct {
 	ThumbnailURL string `json:"thumbnailUrl"`
 	URL          string `json:"url"`
 }
+
 type Hashes struct {
 	Value string `json:"value"`
 	Algo  int    `json:"algo"`
@@ -143,14 +148,17 @@ type SortableGameVersions struct {
 	GameVersionReleaseDate time.Time `json:"gameVersionReleaseDate"`
 	GameVersionTypeID      int64     `json:"gameVersionTypeId"`
 }
+
 type Dependencies struct {
 	ModID        int64 `json:"modId"`
 	RelationType int   `json:"relationType"`
 }
+
 type Modules struct {
 	Name        string `json:"name"`
-	Fingerprint string `json:"fingerprint"`
+	Fingerprint int64  `json:"fingerprint"`
 }
+
 type File struct {
 	ID                   int64                  `json:"id"`
 	GameID               int64                  `json:"gameId"`
@@ -176,9 +184,10 @@ type File struct {
 	ServerPackFileID     int64                  `json:"serverPackFileId"`
 	IsEarlyAccessContent bool                   `json:"isEarlyAccessContent"`
 	EarlyAccessEndDate   time.Time              `json:"earlyAccessEndDate"`
-	FileFingerprint      string                 `json:"fileFingerprint"`
+	FileFingerprint      int64                  `json:"fileFingerprint"`
 	Modules              []Modules              `json:"modules"`
 }
+
 type LatestFilesIndexes struct {
 	GameVersion       string        `json:"gameVersion"`
 	FileID            int64         `json:"fileId"`
@@ -226,6 +235,7 @@ type ModData struct {
 	ThumbsUpCount                 int64                           `json:"thumbsUpCount"`
 	Rating                        int64                           `json:"rating"`
 }
+
 type Pagination struct {
 	Index       int64 `json:"index"`
 	PageSize    int64 `json:"pageSize"`

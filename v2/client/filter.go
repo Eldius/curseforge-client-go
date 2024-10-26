@@ -65,8 +65,11 @@ func WithModsSeatchFilter(q string) ModsQueryOption {
 }
 
 // WithModsModLoaderType defines mod loader to be used
-func WithModsModLoaderType(mlt string) ModsQueryOption {
+func WithModsModLoaderType(mlt int) ModsQueryOption {
 	return ModsQueryOption(func(m ApiQueryParams) {
+		if mlt == 0 {
+			return
+		}
 		m["modLoaderType"] = mlt
 	})
 }
@@ -112,7 +115,7 @@ func WithModsIndex(index int64) ModsQueryOption {
 func (f ApiQueryParams) QueryString() string {
 	v, _ := url.ParseQuery("")
 	for key, value := range f {
-		v.Set(key, fmt.Sprintf("%s", value))
+		v.Set(key, fmt.Sprintf("%v", value))
 	}
 	return v.Encode()
 }

@@ -261,7 +261,7 @@ func parseResponse(res *http.Response, result types.CurseforgeAPIResponse) error
 		return fmt.Errorf("parsing api response: %w", err)
 	}
 
-	result.SetResponse(string(b))
+	result.SetRawResponseBody(string(b))
 
 	return nil
 }

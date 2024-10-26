@@ -1,4 +1,4 @@
-package config
+package client
 
 import (
 	"fmt"
@@ -21,6 +21,7 @@ type Config struct {
 	baseURL string
 	timeout time.Duration
 	debug   bool
+	log     Logger
 }
 
 // NewConfig creates a new client Config with default values
@@ -39,6 +40,7 @@ func NewDefaultConfig(apiKey string) *Config {
 		baseURL: CurseforgeBaseURL,
 		timeout: defaultTimeout,
 		debug:   false,
+		log:     noopLogger{},
 	}
 }
 
@@ -95,5 +97,14 @@ EnableDebug to define the API endpoint to be used
 func EnableDebug(enabled bool) CfgFunc {
 	return func(cfg *Config) {
 		cfg.debug = enabled
+	}
+}
+
+/*
+WithLogger defines the logger to be used
+*/
+func WithLogger(log Logger) CfgFunc {
+	return func(cfg *Config) {
+		cfg.log = log
 	}
 }

@@ -1,13 +1,13 @@
 package types
 
 type CurseforgeAPIResponse interface {
-	SetResponse(string)
+	SetRawResponseBody(string)
 }
 
 type RawResponse struct {
 	RawBody string `json:"body"`
 }
 
-func (r *RawResponse) SetResponse(resp string) {
+func (r *RawResponse) SetRawResponseBody(resp string) {
 	r.RawBody = resp
 }
