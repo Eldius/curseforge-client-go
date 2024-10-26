@@ -8,6 +8,26 @@ import (
 	"net/http"
 )
 
+// Logger is a logger definition to be used with client
+type Logger interface {
+	Printf(format string, v ...any)
+	Println(v ...any)
+	DebugRequest(res *http.Response)
+}
+
+type noopLogger struct {
+	Logger
+}
+
+func (l noopLogger) Printf(_ string, _ ...any) {
+}
+
+func (l noopLogger) Println(_ ...any) {
+}
+
+func (l noopLogger) DebugRequest(_ *http.Response) {
+}
+
 type DefaultSlogClientLogger struct {
 	Logger
 	l *slog.Logger
