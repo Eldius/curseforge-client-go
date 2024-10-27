@@ -273,12 +273,12 @@ func (v MinecraftModLoaders) Sort() MinecraftModLoaders {
 }
 
 type MinecraftModLoader struct {
-	Name         string    `json:"name"`
-	GameVersion  string    `json:"gameVersion"`
-	Latest       bool      `json:"latest"`
-	Recommended  bool      `json:"recommended"`
-	DateModified time.Time `json:"dateModified"`
-	Type         int       `json:"type"`
+	Name         string        `json:"name"`
+	GameVersion  string        `json:"gameVersion"`
+	Latest       bool          `json:"latest"`
+	Recommended  bool          `json:"recommended"`
+	DateModified time.Time     `json:"dateModified"`
+	Type         ModLoaderType `json:"type"`
 }
 
 type ModsResponse struct {
