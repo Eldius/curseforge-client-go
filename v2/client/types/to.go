@@ -1,8 +1,8 @@
 package types
 
 import (
+	"slices"
 	"sort"
-	"strings"
 	"time"
 )
 
@@ -29,13 +29,187 @@ const (
 	ModStatusUnderReview     ModStatus = 10
 )
 
+const (
+	RelationTypeEmbeddedLibrary    RelationType = 1
+	RelationTypeOptionalDependency RelationType = 2
+	RelationTypeRequiredDependency RelationType = 3
+	RelationTypeTool               RelationType = 4
+	RelationTypeIncompatible       RelationType = 5
+	RelationTypeInclude            RelationType = 6
+)
+
+const (
+	HashAlgoSHA1 HashAlgo = 1
+	HashAlgoMD5  HashAlgo = 2
+)
+
+const (
+	FileReleaseTypeRelease FileReleaseType = 1
+	FileReleaseTypeBeta    FileReleaseType = 2
+	FileReleaseTypeAlpha   FileReleaseType = 3
+)
+
+const (
+	FileStatusProcessing         = 1
+	FileStatusChangesRequired    = 2
+	FileStatusUnderReview        = 3
+	FileStatusApproved           = 4
+	FileStatusRejected           = 5
+	FileStatusMalwareDetected    = 6
+	FileStatusDeleted            = 7
+	FileStatusArchived           = 8
+	FileStatusTesting            = 9
+	FileStatusReleased           = 10
+	FileStatusReadyForReview     = 11
+	FileStatusDeprecated         = 12
+	FileStatusBaking             = 13
+	FileStatusAwaitingPublishing = 14
+	FileStatusFailedPublishing   = 15
+)
+
+type FileStatus int
+
+func (f FileStatus) String() string {
+	switch f {
+	case FileStatusProcessing:
+		return "processing"
+	case FileStatusChangesRequired:
+		return "changes-required"
+	case FileStatusUnderReview:
+		return "under-review"
+	case FileStatusApproved:
+		return "approved"
+	case FileStatusRejected:
+		return "rejected"
+	case FileStatusMalwareDetected:
+		return "malware-detected"
+	case FileStatusDeleted:
+		return "deleted"
+	case FileStatusArchived:
+		return "archived"
+	case FileStatusTesting:
+		return "testing"
+	case FileStatusReleased:
+		return "released"
+	case FileStatusReadyForReview:
+		return "ready-for-review"
+	case FileStatusDeprecated:
+		return "deprecated"
+	case FileStatusBaking:
+		return "baking"
+	case FileStatusAwaitingPublishing:
+		return "awaiting-publishing"
+	case FileStatusFailedPublishing:
+		return "failed-publishing"
+	default:
+		return "unknown"
+	}
+}
+
+type FileReleaseType int
+
+func (f FileReleaseType) String() string {
+	switch f {
+	case FileReleaseTypeRelease:
+		return "Release"
+	case FileReleaseTypeBeta:
+		return "Beta"
+	case FileReleaseTypeAlpha:
+		return "Alpha"
+	default:
+		return "Unknown"
+	}
+}
+
+type HashAlgo int
+
+func (h HashAlgo) String() string {
+	switch h {
+	case HashAlgoSHA1:
+		return "SHA1"
+	case HashAlgoMD5:
+		return "MD5"
+	default:
+		return "Unknown"
+	}
+}
+
+type RelationType int
+
+func (r RelationType) String() string {
+	switch r {
+	case RelationTypeEmbeddedLibrary:
+		return "embedded library"
+	case RelationTypeOptionalDependency:
+		return "optional"
+	case RelationTypeRequiredDependency:
+		return "required"
+	case RelationTypeTool:
+		return "tool"
+	case RelationTypeIncompatible:
+		return "incompatible"
+	case RelationTypeInclude:
+		return "include"
+	default:
+		return "unknown"
+	}
+}
+
 type ModLoaderType int
+
+func (m ModLoaderType) String() string {
+	switch m {
+	case ModLoaderTypeAny:
+		return "any"
+	case ModLoaderTypeForge:
+		return "forge"
+	case ModLoaderTypeCauldron:
+		return "cauldron"
+	case ModLoaderTypeLiteLoader:
+		return "liteloader"
+	case ModLoaderTypeFabric:
+		return "fabric"
+	case ModLoaderTypeQuilt:
+		return "quilt"
+	case ModLoaderTypeNeoForge:
+		return "neoforge"
+	default:
+		return "unknown"
+	}
+}
 
 func (t ModLoaderType) Value() int {
 	return int(t)
 }
 
 type ModStatus int
+
+func (m ModStatus) String() string {
+	switch m {
+	case ModStatusNew:
+		return "new"
+	case ModStatusChangesRequired:
+		return "changes-required"
+	case ModStatusUnderReview:
+		return "under-review"
+	case ModStatusApproved:
+		return "approved"
+	case ModStatusRejected:
+		return "rejected"
+	case ModStatusChangesMade:
+		return "changes-made"
+	case ModStatusInactive:
+		return "inactive"
+	case ModStatusAbandoned:
+		return "abandoned"
+	case ModStatusDeleted:
+		return "deleted"
+	case ModStatusUnderSoftReview:
+		return "under-soft-review"
+	default:
+		return "unknown"
+	}
+}
 
 type GameVersionsResponse struct {
 	RawResponse
@@ -159,8 +333,8 @@ type Screenshots struct {
 }
 
 type Hashes struct {
-	Value string `json:"value"`
-	Algo  int    `json:"algo"`
+	Value string   `json:"value"`
+	Algo  HashAlgo `json:"algo"`
 }
 
 type SortableGameVersions struct {
@@ -172,14 +346,16 @@ type SortableGameVersions struct {
 }
 
 type Dependencies struct {
-	ModID        int64 `json:"modId"`
-	RelationType int   `json:"relationType"`
+	ModID        int64        `json:"modId"`
+	RelationType RelationType `json:"relationType"`
 }
 
 type Modules struct {
 	Name        string `json:"name"`
 	Fingerprint int64  `json:"fingerprint"`
 }
+
+type Files []File
 
 type File struct {
 	ID                   int64                  `json:"id"`
@@ -188,8 +364,8 @@ type File struct {
 	IsAvailable          bool                   `json:"isAvailable"`
 	DisplayName          string                 `json:"displayName"`
 	FileName             string                 `json:"fileName"`
-	ReleaseType          int                    `json:"releaseType"`
-	FileStatus           int                    `json:"fileStatus"`
+	ReleaseType          FileReleaseType        `json:"releaseType"`
+	FileStatus           FileStatus             `json:"fileStatus"`
 	Hashes               []Hashes               `json:"hashes"`
 	FileDate             time.Time              `json:"fileDate"`
 	FileLength           int64                  `json:"fileLength"`
@@ -235,7 +411,7 @@ type ModData struct {
 	Slug                          string                          `json:"slug"`
 	Links                         Links                           `json:"links"`
 	Summary                       string                          `json:"summary"`
-	Status                        int                             `json:"status"`
+	Status                        ModStatus                       `json:"status"`
 	DownloadCount                 int                             `json:"downloadCount"`
 	IsFeatured                    bool                            `json:"isFeatured"`
 	PrimaryCategoryID             int                             `json:"primaryCategoryId"`
@@ -245,7 +421,7 @@ type ModData struct {
 	Logo                          Logo                            `json:"logo"`
 	Screenshots                   []Screenshots                   `json:"screenshots"`
 	MainFileID                    int                             `json:"mainFileId"`
-	LatestFiles                   []File                          `json:"latestFiles"`
+	LatestFiles                   Files                           `json:"latestFiles"`
 	LatestFilesIndexes            []LatestFilesIndexes            `json:"latestFilesIndexes"`
 	LatestEarlyAccessFilesIndexes []LatestEarlyAccessFilesIndexes `json:"latestEarlyAccessFilesIndexes"`
 	DateCreated                   time.Time                       `json:"dateCreated"`
@@ -274,11 +450,23 @@ func (m *ModData) GetLatestFile() *File {
 }
 
 // GetLatestFileGameVersions returns the latest file version data
-func (m *ModData) GetLatestFileGameVersions() string {
+func (m *ModData) GetLatestFileGameVersions() []string {
 	f := m.GetLatestFile()
 	if f == nil {
-		return ""
+		return nil
 	}
 
-	return strings.Join(f.GameVersions, ", ")
+	return f.GameVersions
+}
+
+// GetLatestFileByGameVersion returns the latest file version data
+func (m *ModData) GetLatestFileByGameVersion(gv string) *File {
+
+	for _, f := range m.LatestFiles {
+		if slices.Contains(f.GameVersions, gv) {
+			return &f
+		}
+	}
+
+	return nil
 }
