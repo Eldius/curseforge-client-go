@@ -119,3 +119,8 @@ func (f ApiQueryParams) QueryString() string {
 	}
 	return v.Encode()
 }
+
+type GetModsByIdsListRequest struct {
+	ModIds       []int `json:"modIds"`
+	FilterPcOnly bool  `json:"filterPcOnly"`
+}

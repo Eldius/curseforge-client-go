@@ -1,7 +1,10 @@
 package client
 
 import (
+	"bytes"
+	"encoding/json"
 	"fmt"
+	"github.com/eldius/curseforge-client-go/v2/client/types"
 	"log"
 	"net/http"
 	"time"
@@ -59,6 +62,27 @@ func (cfg *Config) NewHTTPClient() *http.Client {
 // NewGetRequest creates a new GET request object to be used with client
 func (cfg *Config) NewGetRequest(path string) (*http.Request, error) {
 	req, err := http.NewRequest(http.MethodGet, fmt.Sprintf("%s%s", cfg.baseURL, path), nil)
+	if err != nil {
+		log.Printf("Failed to create request object: %s", err.Error())
+		return req, err
+	}
+	req.Header.Add(xAPIKeyHeader, cfg.apiKey)
+
+	return req, nil
+}
+
+// NewPostRequest creates a new POST request object to be used with client
+func (cfg *Config) NewPostRequest(path string, body any) (*http.Request, error) {
+	jsonBody, err := json.Marshal(body)
+	if err != nil {
+		return nil, &types.CurseforgeAPIError{
+			Status:  -1,
+			Message: "marshalling request body",
+			Err:     fmt.Errorf("marshalling request body: %w", err),
+		}
+
+	}
+	req, err := http.NewRequest(http.MethodPost, fmt.Sprintf("%s%s", cfg.baseURL, path), bytes.NewBuffer(jsonBody))
 	if err != nil {
 		log.Printf("Failed to create request object: %s", err.Error())
 		return req, err

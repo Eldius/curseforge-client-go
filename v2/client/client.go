@@ -21,6 +21,7 @@ type CurseClient interface {
 	GetMinecraftVersions(...MinecraftVersionsQueryOption) (versions *types.MinecraftVersionsResponse, err error)
 	GetMinecraftModLoaders(...MinecraftModLoadersQueryOption) (versions *types.MinecraftModLoadersResponse, err error)
 	GetMods(opts ...ModsQueryOption) (*types.ModsResponse, error)
+	GetModsByIDs(req *GetModsByIdsListRequest, opts ...ModsQueryOption) (*types.ModsResponse, error)
 }
 
 type curseClient struct {
@@ -142,6 +143,36 @@ func (c *curseClient) GetMods(opts ...ModsQueryOption) (*types.ModsResponse, err
 	}
 
 	return &mv, nil
+}
+
+func (c *curseClient) GetModsByIDs(filter *GetModsByIdsListRequest, opts ...ModsQueryOption) (*types.ModsResponse, error) {
+	q := ApiQueryParams{}
+	for _, o := range opts {
+		o(q)
+	}
+	var result types.ModsResponse
+	req, err := c.opt.NewPostRequest(fmt.Sprintf("%s/v1/mods", minecraftModSearchPath), filter)
+	if err != nil {
+		err = fmt.Errorf("creating get minecraft mods request: %w", err)
+		return &result, types.Wrap(err, "failed to create request object", -1)
+	}
+
+	res, err := c.c.Do(req)
+	if err != nil {
+		err = fmt.Errorf("executing get minecraft mods request: %w", err)
+		return &result, types.Wrap(err, "failed to execute request", -1)
+	}
+	defer func() {
+		_ = res.Body.Close()
+	}()
+
+	var mv types.ModsResponse
+	if err := parseResponse(res, "get game versions", c.opt.debug, &mv); err != nil {
+		return nil, fmt.Errorf("parsing get minecraft mods response: %w", err)
+	}
+
+	return &mv, nil
+	//return nil, nil
 }
 
 func (c *curseClient) buildRequestPath(path string, q ApiQueryParams) string {

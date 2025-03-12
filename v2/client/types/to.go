@@ -1,6 +1,7 @@
 package types
 
 import (
+	"fmt"
 	"slices"
 	"sort"
 	"time"
@@ -345,7 +346,17 @@ type SortableGameVersions struct {
 	GameVersionTypeID      int64     `json:"gameVersionTypeId"`
 }
 
-type Dependencies struct {
+type Dependencies []Dependency
+
+func (d Dependencies) ModIDList() []int64 {
+	var modIDs []int64
+	for _, dep := range d {
+		modIDs = append(modIDs, dep.ModID)
+	}
+	return modIDs
+}
+
+type Dependency struct {
 	ModID        int64        `json:"modId"`
 	RelationType RelationType `json:"relationType"`
 }
@@ -374,7 +385,7 @@ type File struct {
 	DownloadURL          string                 `json:"downloadUrl"`
 	GameVersions         []string               `json:"gameVersions"`
 	SortableGameVersions []SortableGameVersions `json:"sortableGameVersions"`
-	Dependencies         []Dependencies         `json:"dependencies"`
+	Dependencies         Dependencies           `json:"dependencies"`
 	ExposeAsAlternative  bool                   `json:"exposeAsAlternative"`
 	ParentProjectFileID  int64                  `json:"parentProjectFileId"`
 	AlternateFileID      int64                  `json:"alternateFileId"`
@@ -469,4 +480,26 @@ func (m *ModData) GetLatestFileByGameVersion(gv string) *File {
 	}
 
 	return nil
+}
+
+// GetLatestFileByGameVersionsAndModloader finds all
+// compatible versions filtering by game version
+// and modloader.
+func (m *ModData) GetLatestFileByGameVersionsAndModloader(gv, ml string) *File {
+	fmt.Println("looking for:", gv, " / ", ml)
+	for _, f := range m.LatestFiles {
+		fmt.Sprintf("  - %s\n", f.GameVersions)
+		if slices.Contains(f.GameVersions, gv) && slices.Contains(f.GameVersions, ml) {
+			return &f
+		}
+	}
+	return nil
+}
+
+func (m *File) GetDependencyModIDList() []Dependency {
+	var modIDs []Dependency
+	for _, d := range m.Dependencies {
+		modIDs = append(modIDs, d)
+	}
+	return modIDs
 }
