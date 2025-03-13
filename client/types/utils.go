@@ -2,6 +2,7 @@ package types
 
 import "strings"
 
+// ModLoaderByName returns a modloader reference from name
 func ModLoaderByName(ml string) ModLoaderType {
 	switch strings.ToLower(ml) {
 	case "forge":
