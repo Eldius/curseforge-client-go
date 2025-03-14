@@ -33,6 +33,7 @@ type DefaultSlogClientLogger struct {
 	l *slog.Logger
 }
 
+// NewDefaultSlogClientLogger creates a default logger using log/slog
 func NewDefaultSlogClientLogger(logger *slog.Logger) Logger {
 	return &DefaultSlogClientLogger{l: logger}
 }
@@ -49,10 +50,12 @@ func (l DefaultSlogClientLogger) DebugRequest(res *http.Response) {
 	buff, _ := io.ReadAll(res.Body)
 	res.Body = io.NopCloser(bytes.NewReader(buff))
 	slog.With(
-		slog.String("url", res.Request.URL.String()),
-		slog.String("req_uri", res.Request.RequestURI),
-		slog.String("res", string(buff)),
-		slog.String("status", res.Status),
-		slog.Int("status_code", res.StatusCode),
-	).Debug("CurseforgeAPIRequest")
+		"request", map[string]any{
+			"url":         res.Request.URL.String(),
+			"req_uri":     res.Request.RequestURI,
+			"response":    string(buff),
+			"status":      res.Status,
+			"status_code": res.StatusCode,
+			"method":      res.Request.Method,
+		}).Debug("CurseforgeAPIRequest")
 }

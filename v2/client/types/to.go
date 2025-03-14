@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"slices"
 	"sort"
+	"strings"
 	"time"
 )
 
@@ -486,11 +487,23 @@ func (m *ModData) GetLatestFileByGameVersion(gv string) *File {
 // compatible versions filtering by game version
 // and modloader.
 func (m *ModData) GetLatestFileByGameVersionsAndModloader(gv, ml string) *File {
-	fmt.Println("looking for:", gv, " / ", ml)
-	for _, f := range m.LatestFiles {
-		fmt.Sprintf("  - %s\n", f.GameVersions)
-		if slices.Contains(f.GameVersions, gv) && slices.Contains(f.GameVersions, ml) {
-			return &f
+	fmt.Println("looking for:", len(m.LatestFiles), "==>", gv, "/", ml)
+	fmt.Printf(" -> files: %#v\n", m.LatestFiles)
+	for i, f := range m.LatestFiles {
+		var mlf, gvf bool
+		fmt.Printf("  - %d) versions: %s\n", i, f.GameVersions)
+		for _, v := range f.GameVersions {
+			if strings.EqualFold(gv, v) {
+				gvf = true
+			}
+
+			if strings.EqualFold(ml, v) {
+				mlf = true
+			}
+
+			if mlf && gvf {
+				return &f
+			}
 		}
 	}
 	return nil

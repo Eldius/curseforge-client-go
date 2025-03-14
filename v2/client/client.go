@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"github.com/eldius/curseforge-client-go/v2/client/types"
 	"io"
-	"log"
 	"net/http"
 )
 
@@ -58,7 +57,7 @@ func (c *curseClient) GetGameVersions(gameID string) (versions *types.GameVersio
 		_ = res.Body.Close()
 	}()
 	var gv types.GameVersionsResponse
-	if err := parseResponse(res, "get game versions", c.opt.debug, &gv); err != nil {
+	if err := c.parseResponse(res, "get game versions", c.opt.debug, &gv); err != nil {
 		return nil, err
 	}
 	return &gv, nil
@@ -82,7 +81,7 @@ func (c *curseClient) GetMinecraftVersions(opts ...MinecraftVersionsQueryOption)
 		_ = res.Body.Close()
 	}()
 	var mv types.MinecraftVersionsResponse
-	if err := parseResponse(res, "get minecraft versions", c.opt.debug, &mv); err != nil {
+	if err := c.parseResponse(res, "get minecraft versions", c.opt.debug, &mv); err != nil {
 		return nil, err
 	}
 
@@ -108,7 +107,7 @@ func (c *curseClient) GetMinecraftModLoaders(opts ...MinecraftModLoadersQueryOpt
 		_ = res.Body.Close()
 	}()
 	var mv types.MinecraftModLoadersResponse
-	if err := parseResponse(res, "get minecraft mod loaders", c.opt.debug, &mv); err != nil {
+	if err := c.parseResponse(res, "get minecraft mod loaders", c.opt.debug, &mv); err != nil {
 		return nil, err
 	}
 
@@ -138,7 +137,7 @@ func (c *curseClient) GetMods(opts ...ModsQueryOption) (*types.ModsResponse, err
 	}()
 
 	var mv types.ModsResponse
-	if err := parseResponse(res, "get game versions", c.opt.debug, &mv); err != nil {
+	if err := c.parseResponse(res, "get game versions", c.opt.debug, &mv); err != nil {
 		return nil, fmt.Errorf("parsing get minecraft mods response: %w", err)
 	}
 
@@ -167,7 +166,7 @@ func (c *curseClient) GetModsByIDs(filter *GetModsByIdsListRequest, opts ...Mods
 	}()
 
 	var mv types.ModsResponse
-	if err := parseResponse(res, "get game versions", c.opt.debug, &mv); err != nil {
+	if err := c.parseResponse(res, "get game versions", c.opt.debug, &mv); err != nil {
 		return nil, fmt.Errorf("parsing get minecraft mods response: %w", err)
 	}
 
@@ -179,7 +178,7 @@ func (c *curseClient) buildRequestPath(path string, q ApiQueryParams) string {
 	return fmt.Sprintf("%s?%s", path, q.QueryString())
 }
 
-func parseResponse[T types.CurseforgeAPIResponse](res *http.Response, step string, debug bool, out T) error {
+func (c *curseClient) parseResponse(res *http.Response, step string, debug bool, out types.CurseforgeAPIResponse) error {
 	if res.StatusCode/100 != 2 {
 		b, _ := io.ReadAll(res.Body)
 		return types.Wrap(
@@ -188,18 +187,24 @@ func parseResponse[T types.CurseforgeAPIResponse](res *http.Response, step strin
 			res.StatusCode,
 		)
 	}
+	if debug {
+		c.opt.log.DebugRequest(res)
+		//log.Printf("%s.Response (url: %s): %s", step, res.Request.URL.String(), bodyAsString)
+	}
+
 	b, err := io.ReadAll(res.Body)
 	if err != nil {
 		return fmt.Errorf("reading get game versions response: %w", err)
 	}
 
 	bodyAsString := string(b)
-	if debug {
-		log.Printf("%s.Response (url: %s): %s", step, res.Request.URL.String(), bodyAsString)
-	}
 
 	if err := json.Unmarshal(b, out); err != nil {
-		return fmt.Errorf("decoding get game versions response: %w", err)
+		return types.Wrap(
+			fmt.Errorf("decoding get game versions response: %w", err),
+			string(b),
+			res.StatusCode,
+		)
 	}
 	out.SetRawResponseBody(bodyAsString)
 
