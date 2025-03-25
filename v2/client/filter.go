@@ -121,6 +121,6 @@ func (f ApiQueryParams) QueryString() string {
 }
 
 type GetModsByIdsListRequest struct {
-	ModIds       []int `json:"modIds"`
-	FilterPcOnly bool  `json:"filterPcOnly"`
+	ModIds       []int64 `json:"modIds"`
+	FilterPcOnly bool    `json:"filterPcOnly"`
 }

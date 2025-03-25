@@ -67,6 +67,7 @@ func (cfg *Config) NewGetRequest(path string) (*http.Request, error) {
 		return req, err
 	}
 	req.Header.Add(xAPIKeyHeader, cfg.apiKey)
+	req.Header.Add("Accept", "application/json")
 
 	return req, nil
 }
@@ -82,12 +83,18 @@ func (cfg *Config) NewPostRequest(path string, body any) (*http.Request, error) 
 		}
 
 	}
-	req, err := http.NewRequest(http.MethodPost, fmt.Sprintf("%s%s", cfg.baseURL, path), bytes.NewBuffer(jsonBody))
+
+	url := fmt.Sprintf("%s%s", cfg.baseURL, path)
+
+	req, err := http.NewRequest(http.MethodPost, url, bytes.NewBuffer(jsonBody))
 	if err != nil {
 		log.Printf("Failed to create request object: %s", err.Error())
 		return req, err
 	}
 	req.Header.Add(xAPIKeyHeader, cfg.apiKey)
+
+	req.Header.Add("Content-Type", "application/json")
+	req.Header.Add("Accept", "application/json")
 
 	return req, nil
 }

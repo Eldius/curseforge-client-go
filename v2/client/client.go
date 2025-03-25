@@ -1,26 +1,32 @@
 package client
 
 import (
+	"bytes"
+	"context"
 	"encoding/json"
 	"fmt"
 	"github.com/eldius/curseforge-client-go/v2/client/types"
 	"io"
+	"log/slog"
 	"net/http"
+	"strings"
 )
 
 const (
-	getGameVersionsPath    = "/v2/games/%s/versions?sortDescending=true"
-	getMinecraftVersions   = "/v1/minecraft/version"
-	getMinecraftModLoaders = "/v1/minecraft/modloader"
-	minecraftModSearchPath = "/v1/mods/search"
+	getGameVersionsPath        = "/v2/games/%s/versions?sortDescending=true"
+	getMinecraftVersions       = "/v1/minecraft/version"
+	getMinecraftModLoaders     = "/v1/minecraft/modloader"
+	minecraftModSearchPath     = "/v1/mods/search"
+	minecraftModLoadersDetails = "/v1/minecraft/modloader/{modLoaderName}"
 )
 
 type CurseClient interface {
-	GetGameVersions(gameID string) (versions *types.GameVersionsResponse, err error)
-	GetMinecraftVersions(...MinecraftVersionsQueryOption) (versions *types.MinecraftVersionsResponse, err error)
-	GetMinecraftModLoaders(...MinecraftModLoadersQueryOption) (versions *types.MinecraftModLoadersResponse, err error)
-	GetMods(opts ...ModsQueryOption) (*types.ModsResponse, error)
-	GetModsByIDs(req *GetModsByIdsListRequest, opts ...ModsQueryOption) (*types.ModsResponse, error)
+	GetGameVersions(ctx context.Context, gameID string) (versions *types.GameVersionsResponse, err error)
+	GetMinecraftVersions(ctx context.Context, opts ...MinecraftVersionsQueryOption) (versions *types.MinecraftVersionsResponse, err error)
+	GetMinecraftModLoaders(ctx context.Context, opts ...MinecraftModLoadersQueryOption) (versions *types.MinecraftModLoadersResponse, err error)
+	GetMods(ctx context.Context, opts ...ModsQueryOption) (*types.ModsResponse, error)
+	GetModsByIDs(ctx context.Context, req *GetModsByIdsListRequest, opts ...ModsQueryOption) (*types.ModsResponse, error)
+	GetModLoaderDetails(ctx context.Context, modLoaderName string) (*types.ModLoaderDetailsResponse, error)
 }
 
 type curseClient struct {
@@ -38,7 +44,7 @@ func NewCurseClient(apiKey string, opts ...CfgFunc) CurseClient {
 	}
 }
 
-func (c *curseClient) GetGameVersions(gameID string) (versions *types.GameVersionsResponse, err error) {
+func (c *curseClient) GetGameVersions(ctx context.Context, gameID string) (versions *types.GameVersionsResponse, err error) {
 	log := c.opt.log
 	url := c.buildRequestPath(fmt.Sprintf(getGameVersionsPath, gameID), ApiQueryParams{})
 	if c.opt.debug {
@@ -49,21 +55,15 @@ func (c *curseClient) GetGameVersions(gameID string) (versions *types.GameVersio
 		return nil, fmt.Errorf("creating get game versions request: %w", err)
 	}
 
-	res, err := c.c.Do(req)
-	if err != nil {
+	var gv types.GameVersionsResponse
+	if err := c.executeRequest(req.WithContext(ctx), "get game versions", &gv); err != nil {
 		return nil, fmt.Errorf("executing get game versions request: %w", err)
 	}
-	defer func() {
-		_ = res.Body.Close()
-	}()
-	var gv types.GameVersionsResponse
-	if err := c.parseResponse(res, "get game versions", c.opt.debug, &gv); err != nil {
-		return nil, err
-	}
+
 	return &gv, nil
 }
 
-func (c *curseClient) GetMinecraftVersions(opts ...MinecraftVersionsQueryOption) (versions *types.MinecraftVersionsResponse, err error) {
+func (c *curseClient) GetMinecraftVersions(ctx context.Context, opts ...MinecraftVersionsQueryOption) (versions *types.MinecraftVersionsResponse, err error) {
 	q := ApiQueryParams{}
 	for _, o := range opts {
 		o(q)
@@ -73,22 +73,15 @@ func (c *curseClient) GetMinecraftVersions(opts ...MinecraftVersionsQueryOption)
 		return nil, fmt.Errorf("creating get game versions request: %w", err)
 	}
 
-	res, err := c.c.Do(req)
-	if err != nil {
-		return nil, fmt.Errorf("executing get minecraft versions request: %w", err)
-	}
-	defer func() {
-		_ = res.Body.Close()
-	}()
 	var mv types.MinecraftVersionsResponse
-	if err := c.parseResponse(res, "get minecraft versions", c.opt.debug, &mv); err != nil {
-		return nil, err
+	if err := c.executeRequest(req.WithContext(ctx), "get minecraft versions", &mv); err != nil {
+		return nil, fmt.Errorf("executing get minecraft versions request: %w", err)
 	}
 
 	return &mv, nil
 }
 
-func (c *curseClient) GetMinecraftModLoaders(opts ...MinecraftModLoadersQueryOption) (versions *types.MinecraftModLoadersResponse, err error) {
+func (c *curseClient) GetMinecraftModLoaders(ctx context.Context, opts ...MinecraftModLoadersQueryOption) (versions *types.MinecraftModLoadersResponse, err error) {
 	q := ApiQueryParams{}
 	for _, o := range opts {
 		o(q)
@@ -99,23 +92,16 @@ func (c *curseClient) GetMinecraftModLoaders(opts ...MinecraftModLoadersQueryOpt
 		return nil, fmt.Errorf("creating get game versions request: %w", err)
 	}
 
-	res, err := c.c.Do(req)
-	if err != nil {
-		return nil, fmt.Errorf("executing get minecraft mod loaders request: %w", err)
-	}
-	defer func() {
-		_ = res.Body.Close()
-	}()
 	var mv types.MinecraftModLoadersResponse
-	if err := c.parseResponse(res, "get minecraft mod loaders", c.opt.debug, &mv); err != nil {
-		return nil, err
+	if err := c.executeRequest(req.WithContext(ctx), "get minecraft mod loaders", &mv); err != nil {
+		return nil, fmt.Errorf("executing get minecraft mod loaders request: %w", err)
 	}
 
 	return &mv, nil
 }
 
 // GetMods lists mods for a game from API
-func (c *curseClient) GetMods(opts ...ModsQueryOption) (*types.ModsResponse, error) {
+func (c *curseClient) GetMods(ctx context.Context, opts ...ModsQueryOption) (*types.ModsResponse, error) {
 	q := ApiQueryParams{}
 	for _, o := range opts {
 		o(q)
@@ -127,51 +113,33 @@ func (c *curseClient) GetMods(opts ...ModsQueryOption) (*types.ModsResponse, err
 		return &result, types.Wrap(err, "failed to create request object", -1)
 	}
 
-	res, err := c.c.Do(req)
-	if err != nil {
+	var mv types.ModsResponse
+	if err := c.executeRequest(req.WithContext(ctx), "get game versions", &mv); err != nil {
 		err = fmt.Errorf("executing get minecraft mods request: %w", err)
 		return &result, types.Wrap(err, "failed to execute request", -1)
-	}
-	defer func() {
-		_ = res.Body.Close()
-	}()
-
-	var mv types.ModsResponse
-	if err := c.parseResponse(res, "get game versions", c.opt.debug, &mv); err != nil {
-		return nil, fmt.Errorf("parsing get minecraft mods response: %w", err)
 	}
 
 	return &mv, nil
 }
 
-func (c *curseClient) GetModsByIDs(filter *GetModsByIdsListRequest, opts ...ModsQueryOption) (*types.ModsResponse, error) {
+func (c *curseClient) GetModsByIDs(ctx context.Context, filter *GetModsByIdsListRequest, opts ...ModsQueryOption) (*types.ModsResponse, error) {
 	q := ApiQueryParams{}
 	for _, o := range opts {
 		o(q)
 	}
 	var result types.ModsResponse
-	req, err := c.opt.NewPostRequest(fmt.Sprintf("%s/v1/mods", minecraftModSearchPath), filter)
+	req, err := c.opt.NewPostRequest("/v1/mods", filter)
 	if err != nil {
 		err = fmt.Errorf("creating get minecraft mods request: %w", err)
 		return &result, types.Wrap(err, "failed to create request object", -1)
 	}
 
-	res, err := c.c.Do(req)
-	if err != nil {
-		err = fmt.Errorf("executing get minecraft mods request: %w", err)
-		return &result, types.Wrap(err, "failed to execute request", -1)
-	}
-	defer func() {
-		_ = res.Body.Close()
-	}()
-
 	var mv types.ModsResponse
-	if err := c.parseResponse(res, "get game versions", c.opt.debug, &mv); err != nil {
-		return nil, fmt.Errorf("parsing get minecraft mods response: %w", err)
+	if err := c.executeRequest(req.WithContext(ctx), "get game versions", &mv); err != nil {
+		return &result, types.Wrap(err, "failed to execute request", -1)
 	}
 
 	return &mv, nil
-	//return nil, nil
 }
 
 func (c *curseClient) buildRequestPath(path string, q ApiQueryParams) string {
@@ -186,10 +154,6 @@ func (c *curseClient) parseResponse(res *http.Response, step string, debug bool,
 			string(b),
 			res.StatusCode,
 		)
-	}
-	if debug {
-		c.opt.log.DebugRequest(res)
-		//log.Printf("%s.Response (url: %s): %s", step, res.Request.URL.String(), bodyAsString)
 	}
 
 	b, err := io.ReadAll(res.Body)
@@ -209,4 +173,66 @@ func (c *curseClient) parseResponse(res *http.Response, step string, debug bool,
 	out.SetRawResponseBody(bodyAsString)
 
 	return nil
+}
+
+func (c *curseClient) executeRequest(req *http.Request, step string, out types.CurseforgeAPIResponse) error {
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("Content-Type", "application/json")
+
+	reqData := map[string]any{
+		"step":   step,
+		"url":    req.URL.String(),
+		"method": req.Method,
+	}
+
+	if req.Body != nil {
+		b, err := io.ReadAll(req.Body)
+		if err != nil {
+			return fmt.Errorf("reading api request body: %w", err)
+		}
+
+		reqData["body"] = string(b)
+
+		req.Body = io.NopCloser(bytes.NewReader(b))
+	}
+
+	res, err := c.c.Do(req)
+	if err != nil {
+		err = fmt.Errorf("executing get minecraft mods request: %w", err)
+		slog.With("request", reqData, "error", err).Error("APIRequest")
+		return types.Wrap(err, "failed to execute request", -1)
+	}
+
+	reqData["status_code"] = res.StatusCode
+
+	resBody, err := io.ReadAll(res.Body)
+	if err != nil {
+		return fmt.Errorf("reading api response body: %w", err)
+	}
+
+	reqData["response_body"] = string(resBody)
+	res.Body = io.NopCloser(bytes.NewReader(resBody))
+
+	slog.With("request", reqData).Info("APIRequest")
+
+	if err := c.parseResponse(res, step, c.opt.debug, out); err != nil {
+		return fmt.Errorf("parsing api response response: %w", err)
+	}
+
+	return nil
+}
+
+func (c *curseClient) GetModLoaderDetails(ctx context.Context, modLoaderName string) (*types.ModLoaderDetailsResponse, error) {
+	req, err := c.opt.NewGetRequest(strings.Replace(minecraftModLoadersDetails, "{modLoaderName}", modLoaderName, 1))
+	if err != nil {
+		err = fmt.Errorf("creating get minecraft mods request: %w", err)
+		return nil, types.Wrap(err, "failed to create request object", -1)
+	}
+
+	var result types.ModLoaderDetailsResponse
+	if err := c.executeRequest(req.WithContext(ctx), "get mod loader details", &result); err != nil {
+		return &result, types.Wrap(err, "failed to execute request", -1)
+	}
+
+	return &result, nil
 }

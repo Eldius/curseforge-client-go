@@ -1,7 +1,6 @@
 package types
 
 import (
-	"fmt"
 	"slices"
 	"sort"
 	"strings"
@@ -68,6 +67,17 @@ const (
 	FileStatusAwaitingPublishing = 14
 	FileStatusFailedPublishing   = 15
 )
+
+const (
+	ForgeInstaller    ModLoaderInstallMethod = 1
+	ForgeJarInstall   ModLoaderInstallMethod = 2
+	ForgeInstaller_v2 ModLoaderInstallMethod = 3
+	FabricInstaller   ModLoaderInstallMethod = 4
+	QuiltInstaller    ModLoaderInstallMethod = 5
+	NeoForgeInstaller ModLoaderInstallMethod = 6
+)
+
+type ModLoaderInstallMethod int
 
 type FileStatus int
 
@@ -357,6 +367,16 @@ func (d Dependencies) ModIDList() []int64 {
 	return modIDs
 }
 
+func (d Dependencies) ModIDListByDependencyType(dt RelationType) []int64 {
+	var modIDs []int64
+	for _, dep := range d {
+		if dep.RelationType == dt {
+			modIDs = append(modIDs, dep.ModID)
+		}
+	}
+	return modIDs
+}
+
 type Dependency struct {
 	ModID        int64        `json:"modId"`
 	RelationType RelationType `json:"relationType"`
@@ -396,6 +416,24 @@ type File struct {
 	EarlyAccessEndDate   time.Time              `json:"earlyAccessEndDate"`
 	FileFingerprint      int64                  `json:"fileFingerprint"`
 	Modules              []Modules              `json:"modules"`
+}
+
+func (f *File) IsCompatible(gameVersion, modLoader string) bool {
+	gameVerCompat := false
+	modLoaderCompat := false
+	for _, v := range f.GameVersions {
+		if strings.ToLower(v) == strings.ToLower(gameVersion) {
+			gameVerCompat = true
+		}
+		if strings.ToLower(v) == strings.ToLower(modLoader) {
+			modLoaderCompat = true
+		}
+		if gameVerCompat && modLoaderCompat {
+			return true
+		}
+	}
+
+	return false
 }
 
 type LatestFilesIndexes struct {
@@ -487,32 +525,53 @@ func (m *ModData) GetLatestFileByGameVersion(gv string) *File {
 // compatible versions filtering by game version
 // and modloader.
 func (m *ModData) GetLatestFileByGameVersionsAndModloader(gv, ml string) *File {
-	fmt.Println("looking for:", len(m.LatestFiles), "==>", gv, "/", ml)
-	fmt.Printf(" -> files: %#v\n", m.LatestFiles)
-	for i, f := range m.LatestFiles {
-		var mlf, gvf bool
-		fmt.Printf("  - %d) versions: %s\n", i, f.GameVersions)
-		for _, v := range f.GameVersions {
-			if strings.EqualFold(gv, v) {
-				gvf = true
-			}
-
-			if strings.EqualFold(ml, v) {
-				mlf = true
-			}
-
-			if mlf && gvf {
-				return &f
-			}
+	for _, f := range m.LatestFiles {
+		if f.IsCompatible(gv, ml) {
+			return &f
 		}
 	}
 	return nil
 }
 
-func (m *File) GetDependencyModIDList() []Dependency {
+func (f *File) GetDependencyModIDList() []Dependency {
 	var modIDs []Dependency
-	for _, d := range m.Dependencies {
+	for _, d := range f.Dependencies {
 		modIDs = append(modIDs, d)
 	}
 	return modIDs
+}
+
+type ModLoaderDetailsResponse struct {
+	RawResponse
+	Data ModloaderDetails `json:"data"`
+}
+
+type ModloaderDetails struct {
+	ID                             int       `json:"id"`
+	GameVersionID                  int       `json:"gameVersionId"`
+	MinecraftGameVersionID         int       `json:"minecraftGameVersionId"`
+	ForgeVersion                   string    `json:"forgeVersion"`
+	Name                           string    `json:"name"`
+	Type                           int       `json:"type"`
+	DownloadURL                    string    `json:"downloadUrl"`
+	Filename                       string    `json:"filename"`
+	InstallMethod                  int       `json:"installMethod"`
+	Latest                         bool      `json:"latest"`
+	Recommended                    bool      `json:"recommended"`
+	Approved                       bool      `json:"approved"`
+	DateModified                   time.Time `json:"dateModified"`
+	MavenVersionString             string    `json:"mavenVersionString"`
+	VersionJSON                    string    `json:"versionJson"`
+	LibrariesInstallLocation       string    `json:"librariesInstallLocation"`
+	MinecraftVersion               string    `json:"minecraftVersion"`
+	AdditionalFilesJSON            string    `json:"additionalFilesJson"`
+	ModLoaderGameVersionID         int       `json:"modLoaderGameVersionId"`
+	ModLoaderGameVersionTypeID     int       `json:"modLoaderGameVersionTypeId"`
+	ModLoaderGameVersionStatus     int       `json:"modLoaderGameVersionStatus"`
+	ModLoaderGameVersionTypeStatus int       `json:"modLoaderGameVersionTypeStatus"`
+	McGameVersionID                int       `json:"mcGameVersionId"`
+	McGameVersionTypeID            int       `json:"mcGameVersionTypeId"`
+	McGameVersionStatus            int       `json:"mcGameVersionStatus"`
+	McGameVersionTypeStatus        int       `json:"mcGameVersionTypeStatus"`
+	InstallProfileJSON             string    `json:"installProfileJson"`
 }
