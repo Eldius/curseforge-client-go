@@ -114,7 +114,7 @@ func (c *curseClient) GetMods(ctx context.Context, opts ...ModsQueryOption) (*ty
 	}
 
 	var mv types.ModsResponse
-	if err := c.executeRequest(req.WithContext(ctx), "get game versions", &mv); err != nil {
+	if err := c.executeRequest(req.WithContext(ctx), "get mods", &mv); err != nil {
 		err = fmt.Errorf("executing get minecraft mods request: %w", err)
 		return &result, types.Wrap(err, "failed to execute request", -1)
 	}
@@ -123,6 +123,9 @@ func (c *curseClient) GetMods(ctx context.Context, opts ...ModsQueryOption) (*ty
 }
 
 func (c *curseClient) GetModsByIDs(ctx context.Context, filter *GetModsByIdsListRequest, opts ...ModsQueryOption) (*types.ModsResponse, error) {
+	if filter == nil || len(filter.ModIds) < 1 {
+		return nil, fmt.Errorf("%w: invalid filter, mod ids required (%#v)", types.ErrInvalidRequestParams, filter)
+	}
 	q := ApiQueryParams{}
 	for _, o := range opts {
 		o(q)
@@ -135,7 +138,7 @@ func (c *curseClient) GetModsByIDs(ctx context.Context, filter *GetModsByIdsList
 	}
 
 	var mv types.ModsResponse
-	if err := c.executeRequest(req.WithContext(ctx), "get game versions", &mv); err != nil {
+	if err := c.executeRequest(req.WithContext(ctx), "get mods by ids", &mv); err != nil {
 		return &result, types.Wrap(err, "failed to execute request", -1)
 	}
 

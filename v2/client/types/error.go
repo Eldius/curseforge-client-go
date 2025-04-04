@@ -6,21 +6,25 @@ import (
 )
 
 const (
-	ErrAPIBadRequestMsg  = "api returned bad request"
-	ErrRequestErrorMsg   = "could not make request"
-	ErrAPIServerErrorMsg = "server error"
+	ErrAPIBadRequestMsg        = "api returned bad request"
+	ErrRequestErrorMsg         = "could not make request"
+	ErrAPIServerErrorMsg       = "server error"
+	ErrInvalidRequestParamsMsg = "invalid request params"
 )
 
 var (
 	// ErrAPIBadRequest represents a Curseforge API bad request error
-	ErrAPIBadRequest = Wrap(nil, ErrAPIBadRequestMsg, 400)
+	ErrAPIBadRequest error = Wrap(nil, ErrAPIBadRequestMsg, 400)
 	// ErrAPIServerError represents a Curseforge API bad request error
-	ErrAPIServerError = Wrap(nil, ErrAPIServerErrorMsg, 500)
+	ErrAPIServerError error = Wrap(nil, ErrAPIServerErrorMsg, 500)
 	// ErrRequestError represents general a connectivity error
-	ErrRequestError = Wrap(nil, ErrRequestErrorMsg, 0)
+	ErrRequestError error = Wrap(nil, ErrRequestErrorMsg, 0)
+	// ErrInvalidRequestParams represents a validation error in the parameters
+	ErrInvalidRequestParams error = Wrap(nil, ErrInvalidRequestParamsMsg, 0)
 )
 
 type CurseforgeAPIError struct {
+	error
 	Status  int
 	Message string
 	Err     error
