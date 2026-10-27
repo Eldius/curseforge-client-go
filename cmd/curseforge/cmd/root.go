@@ -2,9 +2,13 @@ package cmd
 
 import (
 	"fmt"
-	"github.com/eldius/curseforge-client-go/internal/config"
-	"github.com/spf13/viper"
 	"os"
+	"time"
+
+	"github.com/eldius/curseforge-client-go/internal/config"
+	"github.com/eldius/initial-config-go/configs"
+	"github.com/eldius/initial-config-go/setup"
+	"github.com/spf13/viper"
 
 	"github.com/spf13/cobra"
 )
@@ -17,9 +21,14 @@ var rootCmd = &cobra.Command{
 	PreRunE: func(cmd *cobra.Command, args []string) error {
 		return config.Setup(cfgFile)
 	},
-	PersistentPreRunE: func(cmd *cobra.Command, args []string) error {
-		return config.Setup(cfgFile)
-	},
+	PersistentPreRunE: setup.PersistentPreRunE(
+		"curseforge-cli",
+		setup.WithDefaultCfgFileLocations("~/.curseforge-client", "."),
+		setup.WithEnvPrefix("CURSEFORGE"),
+		setup.WithConfigFileToBeUsed(cfgFile),
+		setup.WithDefaultValues(configs.DefaultConfigValuesLogFileMap),
+	),
+	PersistentPostRunE: setup.PersistentPostRunE(1 * time.Second),
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
 	// Run: func(cmd *cobra.Command, args []string) { },

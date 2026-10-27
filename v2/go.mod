@@ -1,15 +1,14 @@
 module github.com/eldius/curseforge-client-go/v2
 
-go 1.23.2
+go 1.27.3
+
+tool golang.org/x/vuln/cmd/govulncheck
 
 require (
-	github.com/h2non/gock v1.2.0
-	github.com/stretchr/testify v1.9.0
-)
-
-require (
-	github.com/davecgh/go-spew v1.1.1 // indirect
-	github.com/h2non/parth v0.0.0-20190131123155-b4df798d6542 // indirect
-	github.com/pmezard/go-difflib v1.0.0 // indirect
-	gopkg.in/yaml.v3 v3.0.1 // indirect
+	golang.org/x/mod v0.42.0 // indirect
+	golang.org/x/sync v0.24.0 // indirect
+	golang.org/x/sys v0.49.0 // indirect
+	golang.org/x/telemetry v0.0.0-20261021172232-6cd571d43fbb // indirect
+	golang.org/x/tools v0.52.0 // indirect
+	golang.org/x/vuln v1.9.0 // indirect
 )

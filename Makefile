@@ -1,7 +1,46 @@
 
 test:
+	@echo ""
+	@echo "######################"
+	@echo "#  Running tests...  #"
+	@echo "######################"
+	@echo ""
+	@echo ""
 	go test ./... -cover
+	@echo "----------------------"
+	@echo ""
 
+lint:
+	@echo ""
+	@echo "########################"
+	@echo "#  Static analyses...  #"
+	@echo "########################"
+	@echo ""
+	@echo ""
+	golangci-lint run
+	@echo "------------------------"
+	@echo ""
+
+vulncheck:
+	@echo ""
+	@echo "############################"
+	@echo "#  Vulnerability check...  #"
+	@echo "############################"
+	@echo ""
+	@echo ""
+	go tool govulncheck ./...
+	@echo "----------------------------"
+	@echo ""
+
+validate: test lint vulncheck
+	@echo ""
+	@echo "#############################"
+	@echo "#  Validation completed...  #"
+	@echo "#############################"
+	@echo ""
+	@echo ""
+	@echo "-----------------------------"
+	@echo ""
 
 release-build:
 	$(MAKE) release-version bump=build
