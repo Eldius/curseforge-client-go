@@ -5,11 +5,12 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/eldius/curseforge-client-go/v2/client/types"
 	"io"
 	"log/slog"
 	"net/http"
 	"strings"
+
+	"github.com/eldius/curseforge-client-go/v2/client/types"
 )
 
 const (
@@ -41,6 +42,15 @@ func NewCurseClient(apiKey string, opts ...CfgFunc) CurseClient {
 	return &curseClient{
 		opt: *opt,
 		c:   opt.NewHTTPClient(),
+	}
+}
+
+// NewCurseClientWithHTTPClient creates a new Curseforge client using a custom HTTP client
+func NewCurseClientWithHTTPClient(apiKey string, c *http.Client, opts ...CfgFunc) CurseClient {
+	opt := NewConfig(apiKey, opts...)
+	return &curseClient{
+		opt: *opt,
+		c:   c,
 	}
 }
 

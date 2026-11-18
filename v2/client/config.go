@@ -4,10 +4,11 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"github.com/eldius/curseforge-client-go/v2/client/types"
 	"log"
 	"net/http"
 	"time"
+
+	"github.com/eldius/curseforge-client-go/v2/client/types"
 )
 
 const (
